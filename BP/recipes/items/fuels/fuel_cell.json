@@ -1,1 +1,36 @@
-
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:ryno_fuel_cell"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "pattern": [
+            "DPD",
+            "DFD",
+            "DPD"
+        ],
+        "key": {
+            "D": {
+                "item": "utilitycraft:ryno_lead_plate"
+            },
+            "F": {
+                "item": "utilitycraft:ryno_reactor_glass"
+            },
+            "P": {
+                "item": "utilitycraft:ryno_lead_ingot"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:ryno_empty_fuel_cell",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:ryno_lead_ingot"
+            }
+        ]
+    }
+}
