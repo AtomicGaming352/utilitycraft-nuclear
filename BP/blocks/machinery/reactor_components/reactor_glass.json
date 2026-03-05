@@ -2,7 +2,10 @@
 	"format_version": "1.20.80",
 	"minecraft:block": {
 		"description": {
-			"identifier": "utilitycraft:ryno_reactor_glass"
+			"identifier": "utilitycraft:ryno_reactor_glass",
+			"menu_category": {
+				"category": "construction"
+			}
 		},
 		"components": {
 			"minecraft:geometry": "minecraft:geometry.full_block",
