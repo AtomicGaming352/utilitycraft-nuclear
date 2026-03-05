@@ -1,0 +1,33 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:ryno_reactor_concrete"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "LLL",
+            "LGL",
+            "LLL"
+        ],
+        "key": {
+            "L": {
+                "item": "utilitycraft:ryno_lead_plate"
+            },
+            "G": {
+                "item": "minecraft:concrete"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:ryno_reactor_concrete",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:ryno_lead_plate"
+            }
+        ]
+    }
+}
