@@ -4,7 +4,7 @@
 		"description": {
 			"identifier": "utilitycraft:ryno_deepslate_uranium_ore_feature"
 		},
-		"count": 9,
+		"count": 3,
 		"replace_rules": [
 			{
 				"places_block": {
