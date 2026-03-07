@@ -10,13 +10,15 @@
 		},
 		"components": {
 			"minecraft:destructible_by_mining": {
-				"seconds_to_destroy": 0.5
+				"seconds_to_destroy": 1
 			},
 			"minecraft:destructible_by_explosion": {
 				"explosion_resistance": 1
 			},
 			"minecraft:map_color": "#ffffff",
-			"minecraft:loot": "loot_tables/ryno_vanadium_ore_loot.json"
+			"minecraft:loot": "loot_tables/ryno_vanadium_ore_loot.json",
+			"tag:minecraft:is_pickaxe_item_destructible": {},
+			"tag:minecraft:iron_tier_destructible": {}
 		}
 	}
 }
