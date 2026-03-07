@@ -1,0 +1,15 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:item": {
+		"description": {
+			"identifier": "utilitycraft:ryno_deepslate_vanadium_chunk",
+			"menu_category": {
+				"category": "items"
+			}
+		},
+		"components": {
+			"minecraft:icon": "utilitycraft_ryno_deepslate_vanadium_chunk"
+		}
+	}
+}
+
