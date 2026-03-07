@@ -4,7 +4,7 @@
 		"description": {
 			"identifier": "utilitycraft:ryno_deepslate_lead_ore_feature"
 		},
-		"count": 6,
+		"count": 5,
 		"replace_rules": [
 			{
 				"places_block": {
