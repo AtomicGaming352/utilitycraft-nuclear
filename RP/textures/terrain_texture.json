@@ -6,6 +6,9 @@
 		"utilitycraft_ryno_deepslate_uranium_ore": {
 			"textures": "textures/blocks/deepslate_uranium_ore"
 		},
+		"utilitycraft_ryno_vanadium_ore": {
+			"textures": "textures/blocks/vanadium_ore"
+		},
 		"utilitycraft_ryno_reactor_concrete": {
 			"textures": "textures/blocks/reactor_concrete"
 		},
