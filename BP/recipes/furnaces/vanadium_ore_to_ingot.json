@@ -1,0 +1,14 @@
+{
+	"format_version": "1.12",
+	"minecraft:recipe_furnace": {
+		"description": {
+			"identifier": "utilitycraft:ryno_ryno_vanadium_ore_to_ingot"
+		},
+		"tags": [
+			"furnace",
+			"blast_furnace"
+		],
+		"input": "utilitycraft:ryno_raw_vanadium",
+		"output": "utilitycraft:ryno_vanadium_ingot"
+	}
+}
