@@ -1,0 +1,45 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:ryno_energizing_crystal"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "SBS",
+            "ERE",
+            "SBS"
+        ],
+        "key": {
+            "S": {
+                "item": "utilitycraft:stabilized_obsidian_dust"
+            },
+            "R": {
+                "item": "utilitycraft:ryno_refined_uranium"
+            },
+            "E": {
+                "item": "utilitycraft:energized_iron_plate"
+            },
+            "B": {
+                "item": "minecraft:redstone_block"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:ryno_energizing_crystal",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:energized_iron_plate"
+            },
+            {
+                "item": "utilitycraft:ryno_refined_uranium"
+            },
+            {
+                "item": "utilitycraft:stabilized_obsidian_dust"
+            }
+        ]
+    }
+}
