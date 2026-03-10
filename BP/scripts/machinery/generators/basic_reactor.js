@@ -1,5 +1,5 @@
 import { Generator, Energy } from '../managers.js'
-import { nuclearFuels } from "../../config/recipes/basic_reactor.js";
+import { basicnuclearFuels } from "../../config/recipes/reactor.js";
 
 const COLORS = DoriosAPI.constants.textColors
 
