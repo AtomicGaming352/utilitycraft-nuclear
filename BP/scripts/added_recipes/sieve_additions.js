@@ -10,8 +10,8 @@ world.afterEvents.worldLoad.subscribe(() => {
             { item: "utilitycraft:ryno_uranium_chunk", amount: 1, chance: 0.1, tier: 5 }
         ],
         "minecraft:sand" [
-            { item: "utilitycraft:ryno_sulfur_chunk", amount: 1, chance: 0.35, tier 2 },
-            { item: "utilitycraft:ryno_saltpeter", amount: 1, chance: 0.59, tier 1 }
+            { item: "utilitycraft:ryno_sulfur_chunk", amount: 1, chance: 0.35, tier: 2 },
+            { item: "utilitycraft:ryno_saltpeter", amount: 1, chance: 0.59, tier: 1 }
         ]
     };
 
