@@ -6,8 +6,12 @@ world.afterEvents.worldLoad.subscribe(() => {
     // or define completely new ones that didn’t exist before.
     const newDrops = {
         "utilitycraft:crushed_cobbled_deepslate": [
-            { item: "utilitycraft:ryno_raw_lead", amount: 1, chance: 0.15, tier: 2 },
-            { item: "utilitycraft:ryno_raw_uranium", amount: 1, chance: 0.1, tier: 3 }
+            { item: "utilitycraft:ryno_lead_chunk", amount: 1, chance: 0.15, tier: 4 },
+            { item: "utilitycraft:ryno_uranium_chunk", amount: 1, chance: 0.1, tier: 5 }
+        ],
+        "minecraft:sand" [
+            { item: "utilitycraft:ryno_sulfur_chunk", amount: 1, chance: 0.35, tier 2 },
+            { item: "utilitycraft:ryno_saltpeter", amount: 1, chance: 0.59, tier 1 }
         ]
     };
 
