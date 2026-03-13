@@ -1,6 +1,5 @@
-import "./generators/basic_reactor"
-import "./machinery/cryostasis"
-import "./DoriosMachinery/core"
+import "./generators/basic_reactor.js"
+import "./DoriosMachinery/core.js"
 
-import "./transfer_system/system"
-import "./managers"
+import "./transfer_system/system.js"
+import "./managers.js"
