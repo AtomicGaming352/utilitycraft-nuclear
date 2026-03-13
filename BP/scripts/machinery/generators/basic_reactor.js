@@ -69,7 +69,7 @@ DoriosAPI.register.blockComponent('ryno_basic_reactor', {
                 }
 
                 // Only accept nuclear fuel as valid fuel
-                const fuel = nuclearFuels.find(f => item?.typeId.includes(f.id));
+                const fuel = basicnuclearFuels.find(f => item?.typeId.includes(f.id));
                 if (!fuel) {
                     generator.setLabel(`
 §r§eInvalid Fuel
