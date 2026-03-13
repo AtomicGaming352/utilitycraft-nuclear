@@ -13,7 +13,7 @@
 			21,
 			90
 		],
-		"uuid": "617d0747-c93f-4cd5-90b6-db87a53b6803",
+		"uuid": "a7a5eced-4c9f-49e4-93dc-d496f54e5de3",
 		"version": "0.1.2"
 	},
 	"modules": [
@@ -29,7 +29,7 @@
 	],
 	"dependencies": [
 		{
-			"uuid": "cf0832aa-4dea-4213-9b66-d46e76ab4e2c",
+			"uuid": "412de458-fd81-4d34-9d4f-7337a0a291e0",
 			"version": "0.1.2"
 		}
 	]
