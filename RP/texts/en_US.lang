@@ -16,12 +16,29 @@ entity.utilitycraft:ryno_energizer.name=Energizer
 
 ## Items
 item.utilitycraft:ryno_raw_lead=Raw Lead
+item.utilitycraft:ryno_deepslate_lead_chunk=Deepslate Lead Chunk
+item.utilitycraft:ryno_lead_dust=Lead Dust
 item.utilitycraft:ryno_lead_ingot=Lead Ingot
 item.utilitycraft:ryno_lead_plate=Lead Plate
+item.utilitycraft:ryno_lead_plating=Lead Plating
 
 item.utilitycraft:ryno_raw_uranium=Raw Uranium
+item.utilitycraft:ryno_deepslate_uranium_chunk=Deepslate Uranium Chunk
+item.utilitycraft:ryno_Uranium_dust=Uranium Dust
 item.utilitycraft:ryno_refined_uranium=Refined Uranium
+item.utilitycraft:ryno_refined_uranium_nuggets=Refined Uranium Nugets
+item.utilitycraft:ryno_uranium=Uranium
+
+item.utilitycraft:ryno_sulfur_chunk=Sulfur Chunk
+item.utilitycraft:ryno_deepslate_sulfur_chunk=Deepslate Sulfur Chunk
+item.utilitycraft:ryno_sulfur_dust=Sulfur Dust
+item.utilitycraft:ryno_saltpeter=Saltpeter
+item.utilitycraft:ryno_sulfuric_saltpeter_dust=Sulfuric Saltpeter Dust
 
 item.utilitycraft:ryno_empty_fuel_cell=Empty Fuel Cell
 item.utilitycraft:ryno_nuclear_fuel=Nuclear Fuel
+item.utilitycraft:ryno_coolant_nuclear_fuel=Cooled Nuclear Fuel
+item.utilitycraft:ryno_sulfuric_saltpeter_canister=Sulfuric Saltpeter Canister
+item.utilitycraft:ryno_sulfuric_acid_canister=Sulfuric Acid Canister
+
 
