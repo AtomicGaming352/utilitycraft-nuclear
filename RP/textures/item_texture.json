@@ -46,7 +46,7 @@
 		},
 		"utilitycraft_ryno_saltpeter": {
 			"textures": "textures/items/ores/dusts/sulfuric_saltpeter"
-		}
+		},
 		"utilitycraft_ryno_sulfuric_saltpeter": {
 			"textures": "textures/items/ores/dusts/lead_dust"
 		},
@@ -74,8 +74,8 @@
 		"utilitycraft_ryno_sulfuric_acid_canister": {
 			"textures": "textures/items/fuels/sulfuric_acid_canister"
 		},
-		"utilitycraft_ryno_empty_fuel_cell": {
-			"textures": "textures/items/fuels/empty_fuel_cell"
+		"utilitycraft_ryno_reactor_core": {
+			"textures": "textures/items/crafting_components/reactor/reactor_core"
 		}
 	}
 }
