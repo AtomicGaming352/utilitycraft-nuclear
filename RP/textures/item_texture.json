@@ -3,25 +3,79 @@
 	"texture_name": "atlas.items",
 	"texture_data": {
 		"utilitycraft_ryno_raw_lead": {
-			"textures": "textures/items/raw_lead"
+			"textures": "textures/items/ores/raw/raw_lead"
 		},
 		"utilitycraft_ryno_lead_ingot": {
-			"textures": "textures/items/lead_ingot"
+			"textures": "textures/items/ores/ingots/lead_ingot"
 		},
 		"utilitycraft_ryno_lead_plate": {
-			"textures": "textures/items/lead_plate"
+			"textures": "textures/items/crafting_components/plates/lead_plate"
 		},
 		"utilitycraft_ryno_raw_uranium": {
-			"textures": "textures/items/raw_uranium"
+			"textures": "textures/items/ores/raw/raw_uranium"
 		},
 		"utilitycraft_ryno_nuclear_fuel": {
-			"textures": "textures/items/nuclear_fuel"
+			"textures": "textures/items/fuels/nuclear_fuel"
 		},
 		"utilitycraft_ryno_refined_uranium": {
-			"textures": "textures/items/refined_uranium"
+			"textures": "textures/items/ores/ingots/refined_uranium"
 		},
 		"utilitycraft_ryno_empty_fuel_cell": {
-			"textures": "textures/items/empty_fuel_cell"
+			"textures": "textures/items/fuels/empty_fuel_cell"
+		},
+		"utilitycraft_ryno_deepslate_lead_chunk": {
+			"textures": "textures/items/ores/chunks/deepslate_lead_chunk"
+		},
+		"utilitycraft_ryno_deepslate_sulfur_chunk": {
+			"textures": "textures/items/ores/chunks/deepslate_sulfur_chunk"
+		},
+		"utilitycraft_ryno_deepslate_uranium_chunk": {
+			"textures": "textures/items/ores/chunks/deepslate_uranium_chunk"
+		},
+		"utilitycraft_ryno_sulfur_chunk": {
+			"textures": "textures/items/ores/chunks/sulfur_chunk"
+		},
+		"utilitycraft_ryno_lead_dust": {
+			"textures": "textures/items/ores/dusts/lead_dust"
+		},
+		"utilitycraft_ryno_uranium_dust": {
+			"textures": "textures/items/ores/dusts/uranium_dust"
+		},
+		"utilitycraft_ryno_sulfur_dust": {
+			"textures": "textures/items/ores/dusts/sulfur_dust"
+		},
+		"utilitycraft_ryno_saltpeter": {
+			"textures": "textures/items/ores/dusts/sulfuric_saltpeter"
+		}
+		"utilitycraft_ryno_sulfuric_saltpeter": {
+			"textures": "textures/items/ores/dusts/lead_dust"
+		},
+		"utilitycraft_ryno_uranium_ingot": {
+			"textures": "textures/items/ores/ingots/uranium_ingot"
+		},
+		"utilitycraft_ryno_refined_uranium_nugget": {
+			"textures": "textures/items/ores/nuggets/refined_uranium_nugget"
+		},
+		"utilitycraft_ryno_lead_plating": {
+			"textures": "textures/items/crafting_components/platings/lead_plating"
+		},
+		"utilitycraft_ryno_energizing_crystal": {
+			"textures": "textures/items/crafting_components/misc/energizing_crystal"
+		},
+		"utilitycraft_ryno_coolant_cell": {
+			"textures": "textures/items/fuels/coolant_cell"
+		},
+		"utilitycraft_ryno_coolant_nuclear_fuel": {
+			"textures": "textures/items/fuels/coolant_nuclear_fuel"
+		},
+		"utilitycraft_ryno_sulfuric_saltpeter_canister": {
+			"textures": "textures/items/fuels/sulfuric_saltpeter_canister"
+		},
+		"utilitycraft_ryno_sulfuric_acid_canister": {
+			"textures": "textures/items/fuels/sulfuric_acid_canister"
+		},
+		"utilitycraft_ryno_empty_fuel_cell": {
+			"textures": "textures/items/fuels/empty_fuel_cell"
 		}
 	}
 }
