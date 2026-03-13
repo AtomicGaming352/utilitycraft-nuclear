@@ -11,7 +11,7 @@ world.afterEvents.worldLoad.subscribe(() => {
         "utilitycraft:ryno_coolant_cell|utilitycraft:ryno_nuclear_fuel": { output: "utilitycraft:ryno_coolant_nuclear_fuel", required: 8 },
         "minecraft:ice|utilitycraft:ryno_empty_fuel_cell": { output: "utilitycraft:ryno_coolant_cell", required: 9 },
         "minecraft:packed_ice|utilitycraft:ryno_empty_fuel_cell": { output: "utilitycraft:ryno_coolant_cell", required: 1 },
-        "minecraft:blue_ice|utilitycraft:ryno_empty_fuel_cell": { output: "utilitycraft:ryno_coolant_cell", required: 4, amount 9 },
+        "minecraft:blue_ice|utilitycraft:ryno_empty_fuel_cell": { output: "utilitycraft:ryno_coolant_cell", required: 4, amount: 9 },
         "utilitycraft:ryno_sulfuric_acid_canister|utilitycraft:ryno_uranium_ingot": { output: "utilitycraft:ryno_refined_uranium_nugget", required: 2, amount: 1 }
     };
 
