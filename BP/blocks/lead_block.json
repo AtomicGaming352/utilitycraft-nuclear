@@ -16,6 +16,7 @@
 					"texture": "utilitycraft_ryno_lead_block",
 					"render_method": "alpha_test"
 				}
-	}
+			}
+	    }
 	}
 }
