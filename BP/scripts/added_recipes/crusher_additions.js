@@ -6,7 +6,7 @@ world.afterEvents.worldLoad.subscribe(() => {
       "utilitycraft:ryno_deepslate_uranium_chunk": { output: "utilitycraft:ryno_raw_uranium", required: 1 },
       "utilitycraft:ryno_deepslate_vanadium_chunk": { output: "utilitycraft:ryno_raw_vanadium", required: 1 },
       "utilitycraft:ryno_vanadium_chunk": { output: "utilitycraft:ryno_raw_vanadium", required: 1 },
-      "utlitycraft:ryno_raw_lead": { output: "utilitycraft:ryno_lead_dust", amount: 2, required: 1 },
+      "utilitycraft:ryno_raw_lead": { output: "utilitycraft:ryno_lead_dust", amount: 2, required: 1 },
       "utilitycraft:ryno_raw_uranium": { output: "utilitycraft:ryno_uranium_dust", amount: 2, required: 1 },
       "utilitycraft:ryno_raw_vanadium": { output: "utilitycraft:ryno_vanadium_dust", amount: 2, required: 1 },
       "utilitycraft:ryno_sulfur_chunk": { output: "utilitycraft:ryno_sulfur_dust", amount: 4, required: 1 },
