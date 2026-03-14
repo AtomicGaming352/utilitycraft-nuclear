@@ -1,0 +1,51 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:ryno_advanced_coolant_reactor"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "DGD",
+            "CLC",
+            "RPR"
+        ],
+        "key": {
+            "D": {
+                "item": "utilitycraft:ultimate_chip"
+            },
+            "L": {
+                "item": "utilitycraft:ryno_advanced_reactor"
+            },
+            "P": {
+                "item": "utilitycraft:ryno_graphite_rod"
+            },
+            "C": {
+                "item": "utilitycraft:ryno_cooling_unit"
+            },
+            "R": {
+                "item": "utilitycraft:ryno_reactor_concrete"
+            },
+            "G": {
+                "item": "utilitycraft:ryno_reactor_glass"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:ryno_advanced_coolant_reactor",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:ryno_reactor_concrete"
+            },
+            {
+                "item": "utilitycraft:ryno_reactor_glass"
+            },
+            {
+                "item": "utilitycraft:ryno_lead_ingot"
+            }
+        ]
+    }
+}
