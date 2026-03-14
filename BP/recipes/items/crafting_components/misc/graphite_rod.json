@@ -1,0 +1,25 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:ryno_graphite_rod"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "pattern": [
+            " GG",
+            "GGG",
+            "GG "
+        ],
+        "key": {
+            "G": {
+                "item": "utilitycraft:ryno_graphite"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:ryno_graphite_rod",
+            "count": 1
+        }
+    }
+}
