@@ -20,6 +20,10 @@
         "result": {
             "item": "utilitycraft:ryno_graphite_rod",
             "count": 1
-        }
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:ryno_lead_plating"
+            }
     }
 }
