@@ -29,6 +29,10 @@
         "result": {
             "item": "utilitycraft:ryno_cooling_unit",
             "count": 1
-        }
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:ryno_vanadium_ingot"
+            }
     }
 }
