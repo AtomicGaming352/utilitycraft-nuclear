@@ -7,10 +7,12 @@ world.afterEvents.worldLoad.subscribe(() => {
     const newDrops = {
         "utilitycraft:crushed_cobbled_deepslate": [
             { item: "utilitycraft:ryno_deepslate_lead_chunk", amount: 1, chance: 0.15, tier: 4 },
-            { item: "utilitycraft:ryno_deepslate_uranium_chunk", amount: 1, chance: 0.1, tier: 5 }
+            { item: "utilitycraft:ryno_deepslate_uranium_chunk", amount: 1, chance: 0.1, tier: 5 },
+            { item: "utilitycraft:ryno_deepslate_sulfur_chunk", amount: 1, chance: 0.45, tier: 2 },
+            { item: "utilitycraft:ryno_deepslate_vanadium_chunk", amount: 1, chance: 0.39, tier: 3 }
         ],
         "minecraft:sand": [
-            { item: "utilitycraft:ryno_sulfur_chunk", amount: 1, chance: 0.35, tier: 2 },
+            { item: "utilitycraft:ryno_sulfur_chunk", amount: 1, chance: 0.45, tier: 2 },
             { item: "utilitycraft:ryno_saltpeter", amount: 1, chance: 0.59, tier: 1 }
         ]
     };
