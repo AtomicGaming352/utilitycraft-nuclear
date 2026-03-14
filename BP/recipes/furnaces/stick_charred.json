@@ -8,7 +8,7 @@
 			"furnace",
 			"smoker"
 		],
-		"input": "utilitycraft:ryno_stick",
+		"input": "minecraft:stick",
 		"output": "utilitycraft:ryno_charred_stick"
 	}
 }
