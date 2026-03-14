@@ -1,0 +1,14 @@
+{
+	"format_version": "1.12",
+	"minecraft:recipe_furnace": {
+		"description": {
+			"identifier": "utilitycraft:ryno_ryno_stick_to_charred_stick"
+		},
+		"tags": [
+			"furnace",
+			"smoker"
+		],
+		"input": "utilitycraft:ryno_stick",
+		"output": "utilitycraft:ryno_charred_stick"
+	}
+}
