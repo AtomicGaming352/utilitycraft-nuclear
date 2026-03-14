@@ -6,6 +6,8 @@ world.afterEvents.worldLoad.subscribe(() => {
         "utilitycraft:ryno_lead_dust": { output: "utilitycraft:ryno_lead_ingot" },
         "utilitycraft:ryno_raw_uranium": { output: "utilitycraft:ryno_uranium_ingot" },
         "utilitycraft:ryno_uranium_dust": { output: "utilitycraft:ryno_uranium_ingot" },
+        "utilitycraft:ryno_raw_vanadium": { output: "utilitycraft:ryno_vanadium_ingot" },
+        "utilitycraft:ryno_vanadium_dust": { output: "utilitycraft:ryno_vanadium_ingot" },
         "utilitycraft:ryno_sulfuric_saltpeter_canister": { output: "utilitycraft:ryno_sulfuric_acid_canister" }
     };
 
