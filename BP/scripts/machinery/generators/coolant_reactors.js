@@ -1,5 +1,5 @@
 import { Generator, Energy } from '../managers.js'
-import { advancednuclearFuels } from "../../config/recipes/reactor.js";
+import { coolantFuels } from "../../config/recipes/reactor.js";
 
 const COLORS = DoriosAPI.constants.textColors
 
@@ -69,7 +69,7 @@ DoriosAPI.register.blockComponent('ryno_coolant_reactor', {
                 }
 
                 // Only accept nuclear fuel as valid fuel
-                const fuel = advancednuclearFuels.find(f => item?.typeId.includes(f.id));
+                const fuel = coolantFuels.find(f => item?.typeId.includes(f.id));
                 if (!fuel) {
                     generator.setLabel(`
 §r§eInvalid Fuel
