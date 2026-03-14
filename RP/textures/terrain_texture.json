@@ -3,6 +3,9 @@
 		"utilitycraft_ryno_deepslate_lead_ore": {
 			"textures": "textures/blocks/deepslate_lead_ore"
 		},
+		"utilitycraft_ryno_lead_block": {
+			"textures": "textures/blocks/lead_block"
+		},
 		"utilitycraft_ryno_deepslate_uranium_ore": {
 			"textures": "textures/blocks/deepslate_uranium_ore"
 		},
@@ -20,6 +23,18 @@
 		},
 		"utilitycraft_ryno_basic_reactor_on": {
 			"textures": "textures/blocks/basic_reactor_on"
+		},
+		"utilitycraft_ryno_advanced_reactor_off": {
+			"textures": "textures/blocks/advanced_reactor_off"
+		},
+		"utilitycraft_ryno_advanced_reactor_on": {
+			"textures": "textures/blocks/advanced_reactor_on"
+		},
+		"utilitycraft_ryno_advanced_coolant_reactor_off": {
+			"textures": "textures/blocks/advanced_coolant_reactor_off"
+		},
+		"utilitycraft_ryno_advanced_coolant_reactor_on": {
+			"textures": "textures/blocks/advanced_coolant_reactor_on"
 		},
 		"utilitycraft_ryno_energizer_on": {
 			"textures": "textures/blocks/energizer_on"
