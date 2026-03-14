@@ -10,7 +10,12 @@
 		"components": {
 			"minecraft:destructible_by_mining": {
 				"seconds_to_destroy": 3.0
-			}
+			},
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "utilitycraft_ryno_lead_block",
+					"render_method": "alpha_test"
+				}
 	}
 	}
 }
