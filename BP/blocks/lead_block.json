@@ -12,11 +12,12 @@
 				"seconds_to_destroy": 3.0
 			},
 			"minecraft:geometry": "minecraft:geometry.full_block",
-"minecraft:material_instances": {
-    "*": {
-        "texture": "utilitycraft_ryno_lead_block"
-    }
-}
-	    }
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "utilitycraft_ryno_lead_block",
+					"render_method": "opaque"
+				}
+			}
+		}
 	}
 }
