@@ -7,6 +7,7 @@ world.afterEvents.worldLoad.subscribe(() => {
         "utilitycraft:ryno_sulfur_dust|utilitycraft:ryno_saltpeter": { output: "utilitycraft:ryno_sulfuric_saltpeter", required: 1 },
         "utilitycraft:ryno_lead_plate|minecraft:concrete": { output: "utilitycraft:ryno_reactor_concrete", required: 4 },
         "utilitycraft:ryno_lead_plate|utilitycraft:compressed_glass": { output: "utilitycraft:ryno_reactor_glass", required: 4 },
+        "utilitycraft:coal_dust|utilitycraft:ryno_charred_stick": { output: "utilitycraft:ryno_graphite", required: 4 },
         "utilitycraft:ryno_lead_plate|minecraft:glass": { output: "utilitycraft:ryno_empty_fuel_cell", required: 4 },
         "utilitycraft:ryno_coolant_cell|utilitycraft:ryno_nuclear_fuel": { output: "utilitycraft:ryno_coolant_nuclear_fuel", required: 8 },
         "minecraft:ice|utilitycraft:ryno_empty_fuel_cell": { output: "utilitycraft:ryno_coolant_cell", required: 9 },
