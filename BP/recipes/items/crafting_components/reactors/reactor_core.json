@@ -1,0 +1,45 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:ryno_reactore_core"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "SBS",
+            "ERE",
+            "SBS"
+        ],
+        "key": {
+            "S": {
+                "item": "utilitycraft:ryno_lead_plating"
+            },
+            "R": {
+                "item": "utilitycraft:ryno_refined_uranium"
+            },
+            "E": {
+                "item": "utilitycraft:ryno_grahite_rod"
+            },
+            "B": {
+                "item": "utilitycraft:ryno_lead_block"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:ryno_reactor_core",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:ryno_lead_plating"
+            },
+            {
+                "item": "utilitycraft:ryno_refined_uranium"
+            },
+            {
+                "item": "utilitycraft:ryno_graphite_rod"
+            }
+        ]
+    }
+}
