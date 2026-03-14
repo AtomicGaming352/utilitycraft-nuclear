@@ -13,8 +13,8 @@
 			21,
 			90
 		],
-		"uuid": "412de458-fd81-4d34-9d4f-7337a0a291e0",
-		"version": "0.1.2"
+		"uuid": "96669dd3-758b-4ea7-8840-ba7ac7c9e557",
+		"version": "0.1.3"
 	},
 	"modules": [
 		{
@@ -40,8 +40,8 @@
 	],
 	"dependencies": [
 		{
-			"uuid": "a7a5eced-4c9f-49e4-93dc-d496f54e5de3",
-			"version": "0.1.2"
+			"uuid": "27842321-f426-4331-b8d6-ef26c4db1723",
+			"version": "0.1.3"
 		},
 		{
 			"module_name": "@minecraft/server",
