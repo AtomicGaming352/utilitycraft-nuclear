@@ -1,0 +1,51 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:ryno_basic_reactor"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "DGD",
+            "RLR",
+            "CUC"
+        ],
+        "key": {
+            "D": {
+                "item": "utilitycraft:advanced_chip"
+            },
+            "U": {
+                "item": "utilitycraft:ultimate_chip"
+            },
+            "R": {
+                "item": "utilitycraft:ryno_graphite_rod"
+            },
+            "L": {
+                "item": "utilitycraft:ryno_basic_reactor"
+            },
+            "C": {
+                "item": "utilitycraft:ryno_reactor_concrete"
+            },
+            "G": {
+                "item": "utilitycraft:ryno_reactor_glass"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:ryno_advanced_reactor",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:ryno_reactor_concrete"
+            },
+            {
+                "item": "utilitycraft:ryno_reactor_glass"
+            },
+            {
+                "item": "utilitycraft:ryno_lead_ingot"
+            }
+        ]
+    }
+}
