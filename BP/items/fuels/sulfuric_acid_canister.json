@@ -8,7 +8,8 @@
 			}
 		},
 		"components": {
-			"minecraft:icon": "utilitycraft_ryno_sulfuric_acid_canister"
+			"minecraft:icon": "utilitycraft_ryno_sulfuric_acid_canister",
+			"minecraft:max_stack_size": 16
 		}
 	}
 }
