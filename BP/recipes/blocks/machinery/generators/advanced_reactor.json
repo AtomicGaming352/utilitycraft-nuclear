@@ -2,7 +2,7 @@
     "format_version": "1.20.80",
     "minecraft:recipe_shaped": {
         "description": {
-            "identifier": "utilitycraft:ryno_basic_reactor"
+            "identifier": "utilitycraft:ryno_advanced_reactor"
         },
         "tags": [
             "utilitycraft_workbench"
