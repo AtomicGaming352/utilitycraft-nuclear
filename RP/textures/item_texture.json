@@ -5,8 +5,14 @@
 		"utilitycraft_ryno_raw_lead": {
 			"textures": "textures/items/ores/raw/raw_lead"
 		},
+		"utilitycraft_ryno_raw_vanadiun": {
+			"textures": "textures/items/ores/raw/raw_vanadium"
+		},
 		"utilitycraft_ryno_lead_ingot": {
 			"textures": "textures/items/ores/ingots/lead_ingot"
+		},
+		"utilitycraft_ryno_vanadium_ingot": {
+			"textures": "textures/items/ores/ingots/vanadium_ingot"
 		},
 		"utilitycraft_ryno_lead_plate": {
 			"textures": "textures/items/crafting_components/plates/lead_plate"
@@ -35,11 +41,20 @@
 		"utilitycraft_ryno_sulfur_chunk": {
 			"textures": "textures/items/ores/chunks/sulfur_chunk"
 		},
+		"utilitycraft_ryno_deepslate_vanadium_chunk": {
+			"textures": "textures/items/ores/chunks/deepslate_vanadium_chunk"
+		},
+		"utilitycraft_ryno_vanadium_chunk": {
+			"textures": "textures/items/ores/chunks/vanadium_chunk"
+		},
 		"utilitycraft_ryno_lead_dust": {
 			"textures": "textures/items/ores/dusts/lead_dust"
 		},
 		"utilitycraft_ryno_uranium_dust": {
 			"textures": "textures/items/ores/dusts/uranium_dust"
+		},
+		"utilitycraft_ryno_vanadium_dust": {
+			"textures": "textures/items/ores/dusts/vanadium_dust"
 		},
 		"utilitycraft_ryno_sulfur_dust": {
 			"textures": "textures/items/ores/dusts/sulfur_dust"
@@ -76,6 +91,18 @@
 		},
 		"utilitycraft_ryno_reactor_core": {
 			"textures": "textures/items/crafting_components/reactor/reactor_core"
+		},
+		"utilitycraft_ryno_cooling_unit": {
+			"textures": "textures/items/crafting_components/misc/cooling_unit"
+		},
+		"utilitycraft_ryno_graphite": {
+			"textures": "textures/items/crafting_components/misc/graphite"
+		},
+		"utilitycraft_ryno_graphite_rod": {
+			"textures": "textures/items/crafting_components/misc/graphite_rod"
+		},
+		"utilitycraft_ryno_charred_stick": {
+			"textures": "textures/items/crafting_components/misc/charred_stick"
 		}
 	}
 }
