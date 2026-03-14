@@ -4,11 +4,14 @@ pack.description=Adds nuclear capabilities to UtilityCraft, including for power 
 ## Blocks
 tile.utilitycraft:ryno_deepslate_lead_ore.name=Deepslate Lead Ore
 tile.utilitycraft:ryno_deepslate_uranium_ore.name=Deepslate Uranium Ore
+tile.utilitycraft:ryno_lead_block.name=Lead Block
 tile.utilitycraft:ryno_reactor_concrete.name=Reactor Concrete
 tile.utilitycraft:ryno_reactor_glass.name=Reactor Glass
 
 ## Machinery
 tile.utilitycraft:ryno_basic_reactor.name=Basic Reactor
+tile.utilitycraft:ryno_advanced_reactor.name=Advanced Reactor
+tile.utilitycraft:ryno_advanced_coolant_reactor.name=Advanced Coolant Reactor
 tile.utilitycraft:ryno_energizer.name=Energizer
 
 entity.utilitycraft:ryno_reactor.name=Reactor
@@ -35,6 +38,12 @@ item.utilitycraft:ryno_sulfur_dust=Sulfur Dust
 item.utilitycraft:ryno_saltpeter=Saltpeter
 item.utilitycraft:ryno_sulfuric_saltpeter_dust=Sulfuric Saltpeter Dust
 
+item.utilitycraft:ryno_raw_vanadium=Raw Vanadium
+item.utilitycraft:ryno_vanadium_chunk=Vanadium Chunk
+item.utilitycraft:ryno_deepslate_vanadium_chunk=Deepslate Vanadium Chunk
+item.utilitycraft:ryno_vanadium_dust=Vanadium Dust
+item.utilitycraft:ryno_vanadium_ingot=Vanadium Ingot
+
 item.utilitycraft:ryno_empty_fuel_cell=Empty Fuel Cell
 item.utilitycraft:ryno_nuclear_fuel=Nuclear Fuel
 item.utilitycraft:ryno_coolant_nuclear_fuel=Cooled Nuclear Fuel
@@ -43,3 +52,8 @@ item.utilitycraft:ryno_sulfuric_saltpeter_canister=Sulfuric Saltpeter Canister
 item.utilitycraft:ryno_sulfuric_acid_canister=Sulfuric Acid Canister
 
 item.utilitycraft:ryno_energizing_crystal=Energizing Crystal
+item.utilitycraft:ryno_cooling_unit=Cooling Unit
+item.utilitycraft:ryno_charred_stick=Charred Stick
+item.utilitycraft:ryno_graphite=Graphite
+item.utilitycraft:ryno_graphite_rod=Graphite Rod
+item.utilitycraft:ryno_reactor_core=Reactor Core
