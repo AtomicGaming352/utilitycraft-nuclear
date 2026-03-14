@@ -59,11 +59,11 @@
 		"utilitycraft_ryno_sulfur_dust": {
 			"textures": "textures/items/ores/dusts/sulfur_dust"
 		},
-		"utilitycraft_ryno_saltpeter": {
+		"utilitycraft_ryno_sulfuric_saltpeter": {
 			"textures": "textures/items/ores/dusts/sulfuric_saltpeter"
 		},
-		"utilitycraft_ryno_sulfuric_saltpeter": {
-			"textures": "textures/items/ores/dusts/lead_dust"
+		"utilitycraft_ryno_saltpeter": {
+			"textures": "textures/items/ores/dusts/saltpeter"
 		},
 		"utilitycraft_ryno_uranium_ingot": {
 			"textures": "textures/items/ores/ingots/uranium_ingot"
@@ -90,7 +90,7 @@
 			"textures": "textures/items/fuels/sulfuric_acid_canister"
 		},
 		"utilitycraft_ryno_reactor_core": {
-			"textures": "textures/items/crafting_components/reactor/reactor_core"
+			"textures": "textures/items/crafting_components/reactor/nuclear_core"
 		},
 		"utilitycraft_ryno_cooling_unit": {
 			"textures": "textures/items/crafting_components/misc/cooling_unit"
