@@ -27,37 +27,55 @@
         }
       ]
     },
+
     {
-      "rolls": 1,  
+      "rolls": 1,
       "conditions": [
         {
-        "condition": "match_tool",
+          "condition": "match_tool",
           "minecraft:match_tool_filter_all": [
             "minecraft:is_tool",
             "minecraft:is_pickaxe"
           ],
-        "enchantments": [
+          "enchantments": [
             {
-                "fortune": {
-                    "level": 1
-                }
+              "fortune": {
+                "level": 1
+              }
             }
-        ]
+          ]
         }
       ],
       "entries": [
         {
           "type": "item",
-          "name": "utilitycraft:ryno_raw_vanadium",
-          "functions": [
+          "name": "utilitycraft:ryno_raw_vanadium"
+        }
+      ]
+    },
+
+    {
+      "rolls": 2,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "minecraft:match_tool_filter_all": [
+            "minecraft:is_tool",
+            "minecraft:is_pickaxe"
+          ],
+          "enchantments": [
             {
-              "function": "set_count",
-              "count": {
-                "min": 1,
-                "max": 4
+              "fortune": {
+                "level": 2
               }
             }
           ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "utilitycraft:ryno_raw_vanadium"
         }
       ]
     }
