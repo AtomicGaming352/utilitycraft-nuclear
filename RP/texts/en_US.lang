@@ -4,6 +4,7 @@ pack.description=Adds nuclear capabilities to UtilityCraft, including for power 
 ## Blocks
 tile.utilitycraft:ryno_deepslate_lead_ore.name=Deepslate Lead Ore
 tile.utilitycraft:ryno_deepslate_uranium_ore.name=Deepslate Uranium Ore
+tile.utilitycraft:ryno_vanadium_ore.name=Vanadium Ore
 tile.utilitycraft:ryno_lead_block.name=Lead Block
 tile.utilitycraft:ryno_reactor_concrete.name=Reactor Concrete
 tile.utilitycraft:ryno_reactor_glass.name=Reactor Glass
@@ -13,6 +14,7 @@ tile.utilitycraft:ryno_basic_reactor.name=Basic Reactor
 tile.utilitycraft:ryno_advanced_reactor.name=Advanced Reactor
 tile.utilitycraft:ryno_advanced_coolant_reactor.name=Advanced Coolant Reactor
 tile.utilitycraft:ryno_energizer.name=Energizer
+tile.utilitycraft:ryno_freezer.name=Freezer
 
 entity.utilitycraft:ryno_reactor.name=Reactor
 entity.utilitycraft:ryno_energizer.name=Energizer
