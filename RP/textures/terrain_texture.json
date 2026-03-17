@@ -41,6 +41,12 @@
 		},
 		"utilitycraft_ryno_energizer_off": {
 			"textures": "textures/blocks/energizer_off"
+		},
+		"utilitycraft_ryno_freezer_on": {
+			"textures": "textures/blocks/freezer_on"
+		},
+		"utilitycraft_ryno_freezer_off": {
+			"textures": "textures/blocks/freezer_off"
 		}
 	}
 }
