@@ -1,0 +1,45 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:ryno_freezer"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "LPL",
+            "DMD",
+            "LRL"
+        ],
+        "key": {
+            "D": {
+                "item": "utilitycraft:ryno_cooling_unit"
+            },
+            "L": {
+                "item": "utilitycraft:ryno_lead_plating"
+            },
+            "R": {
+                "item": "utilitycraft:energized_iron_block"
+            },
+            "M": {
+                "item": "utilitycraft:machine_case"
+            },
+            "P": {
+                "item": "utilitycraft:advanced_chip"
+          }
+        },
+        "result": {
+            "item": "utilitycraft:ryno_freezer",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:ryno_cooling_unir"
+            },
+            {
+                "item": "utilitycraft:ryno_lead_plate"
+            }
+        ]
+    }
+}
