@@ -37,7 +37,7 @@
 				"machine": {
 					"energy_cap": 256000,
 					"energy_cost": 3200,
-					"rate_speed_base": 40,
+					"rate_speed_base": 10,
 					"upgrades": [
 						4,
 						5
