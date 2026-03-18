@@ -31,7 +31,6 @@
 			"utilitycraft:simple_machine": {
 				"rotation": "facing",
 				"entity": {
-					"name": "energizer",
 					"input_type": "simple",
 					"output_type": "simple"
 				},
