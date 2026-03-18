@@ -1,6 +1,7 @@
 {
     "ui_defs": [
         "ui/reactor.json",
-        "ui/simple_machine.json"
+        "ui/energizer.json",
+        "ui/freezer.json"
     ]
 }
