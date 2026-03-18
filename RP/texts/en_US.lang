@@ -1,61 +1,62 @@
-pack.name=UtilityCraft Nuclear BP
-pack.description=Adds nuclear capabilities to UtilityCraft, including for power generation and explosives
+pack.name=Nuclear Engineering:Age of Radiation RP!
+pack.description=[V0.1.3]  \n  Adds nuclear capabilities to UtilityCraft, including for power generation and explosives.
 
 ## Blocks
-tile.utilitycraft:ryno_deepslate_lead_ore.name=Deepslate Lead Ore
-tile.utilitycraft:ryno_deepslate_uranium_ore.name=Deepslate Uranium Ore
-tile.utilitycraft:ryno_vanadium_ore.name=Vanadium Ore
-tile.utilitycraft:ryno_lead_block.name=Lead Block
-tile.utilitycraft:ryno_reactor_concrete.name=Reactor Concrete
-tile.utilitycraft:ryno_reactor_glass.name=Reactor Glass
+tile.utilitycraft:ryno_deepslate_lead_ore.name=Deepslate Lead Ore §9 \n   @Nuclear Engineering
+tile.utilitycraft:ryno_deepslate_uranium_ore.name=Deepslate Uranium Ore §9 \n   @Nuclear Engineering
+tile.utilitycraft:ryno_vanadium_ore.name=Vanadium Ore §9 \n   @Nuclear Engineering
+tile.utilitycraft:ryno_lead_block.name=Lead Block §9 \n   @Nuclear Engineering
+tile.utilitycraft:ryno_reactor_concrete.name=Reactor Concrete §9 \n   @Nuclear Engineering
+tile.utilitycraft:ryno_reactor_glass.name=Reactor Glass §9 \n   @Nuclear Engineering
 
 ## Machinery
-tile.utilitycraft:ryno_basic_reactor.name=Basic Reactor
-tile.utilitycraft:ryno_advanced_reactor.name=Advanced Reactor
-tile.utilitycraft:ryno_advanced_coolant_reactor.name=Advanced Coolant Reactor
-tile.utilitycraft:ryno_energizer.name=Energizer
-tile.utilitycraft:ryno_freezer.name=Freezer
+tile.utilitycraft:ryno_basic_reactor.name=§eBasic Reactor \n §7 Rate: 800 DE/t §9 \n   @Nuclear Engineering
+tile.utilitycraft:ryno_advanced_reactor.name=§cAdvanced Reactor \n §7 Rate: 1.6 kDE/t §9 \n   @Nuclear Engineering
+tile.utilitycraft:ryno_advanced_coolant_reactor.name=§cAdvanced Coolant Reactor \n §7 Rate: 1.6 kDE/t §9 \n   @Nuclear Engineering
+tile.utilitycraft:ryno_energizer.name=Energizer\n§7- Accepted upgrades:\n   §a§7 §b§7 §9 \n   @Nuclear Engineering
+tile.utilitycraft:ryno_freezer.name=Item Freezer\n§7- Accepted upgrades:\n   §a§7 §b§7 §9 \n   @Nuclear Engineering
 
 entity.utilitycraft:ryno_reactor.name=Reactor
 entity.utilitycraft:ryno_energizer.name=Energizer
+entity.utilitycraft:ryno_freezer.name=Item Freezer
 
 ## Items
-item.utilitycraft:ryno_raw_lead=Raw Lead
-item.utilitycraft:ryno_deepslate_lead_chunk=Deepslate Lead Chunk
-item.utilitycraft:ryno_lead_dust=Lead Dust
-item.utilitycraft:ryno_lead_ingot=Lead Ingot
-item.utilitycraft:ryno_lead_plate=Lead Plate
-item.utilitycraft:ryno_lead_plating=Lead Plating
+item.utilitycraft:ryno_raw_lead=Raw Lead §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_deepslate_lead_chunk=Deepslate Lead Chunk §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_lead_dust=Lead Dust §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_lead_ingot=Lead Ingot §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_lead_plate=Lead Plate §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_lead_plating=Lead Plating §9 \n   @Nuclear Engineering
 
-item.utilitycraft:ryno_raw_uranium=Raw Uranium
-item.utilitycraft:ryno_deepslate_uranium_chunk=Deepslate Uranium Chunk
-item.utilitycraft:ryno_Uranium_dust=Uranium Dust
-item.utilitycraft:ryno_refined_uranium=Refined Uranium
-item.utilitycraft:ryno_refined_uranium_nugget=Refined Uranium Nugget
-item.utilitycraft:ryno_uranium_ingot=Uranium Ingot
+item.utilitycraft:ryno_raw_uranium=Raw Uranium §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_deepslate_uranium_chunk=Deepslate Uranium Chunk §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_Uranium_dust=Uranium Dust §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_refined_uranium=Refined Uranium §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_refined_uranium_nugget=Refined Uranium Nugget §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_uranium_ingot=Uranium Ingot §9 \n   @Nuclear Engineering
 
-item.utilitycraft:ryno_sulfur_chunk=Sulfur Chunk
-item.utilitycraft:ryno_deepslate_sulfur_chunk=Deepslate Sulfur Chunk
-item.utilitycraft:ryno_sulfur_dust=Sulfur Dust
-item.utilitycraft:ryno_saltpeter=Saltpeter
-item.utilitycraft:ryno_sulfuric_saltpeter=Sulfuric Saltpeter Dust
+item.utilitycraft:ryno_sulfur_chunk=Sulfur Chunk §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_deepslate_sulfur_chunk=Deepslate Sulfur Chunk §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_sulfur_dust=Sulfur Dust §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_saltpeter=Saltpeter §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_sulfuric_saltpeter=Sulfuric Saltpeter Dust §9 \n   @Nuclear Engineering
 
-item.utilitycraft:ryno_raw_vanadium=Raw Vanadium
-item.utilitycraft:ryno_vanadium_chunk=Vanadium Chunk
-item.utilitycraft:ryno_deepslate_vanadium_chunk=Deepslate Vanadium Chunk
-item.utilitycraft:ryno_vanadium_dust=Vanadium Dust
-item.utilitycraft:ryno_vanadium_ingot=Vanadium Ingot
+item.utilitycraft:ryno_raw_vanadium=Raw Vanadium §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_vanadium_chunk=Vanadium Chunk §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_deepslate_vanadium_chunk=Deepslate Vanadium Chunk §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_vanadium_dust=Vanadium Dust §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_vanadium_ingot=Vanadium Ingot §9 \n   @Nuclear Engineering
 
-item.utilitycraft:ryno_empty_fuel_cell=Empty Fuel Cell
-item.utilitycraft:ryno_nuclear_fuel=Nuclear Fuel
-item.utilitycraft:ryno_coolant_nuclear_fuel=Cooled Nuclear Fuel
-item.utilitycraft:ryno_coolant_cell=Coolant Cell
-item.utilitycraft:ryno_sulfuric_saltpeter_canister=Sulfuric Saltpeter Canister
-item.utilitycraft:ryno_sulfuric_acid_canister=Sulfuric Acid Canister
+item.utilitycraft:ryno_empty_fuel_cell=Empty Fuel Cell §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_nuclear_fuel=Nuclear Fuel §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_coolant_nuclear_fuel=Cooled Nuclear Fuel §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_coolant_cell=Coolant Cell §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_sulfuric_saltpeter_canister=Sulfuric Saltpeter Canister §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_sulfuric_acid_canister=Sulfuric Acid Canister §9 \n   @Nuclear Engineering
 
-item.utilitycraft:ryno_energizing_crystal=Energizing Crystal
-item.utilitycraft:ryno_cooling_unit=Cooling Unit
-item.utilitycraft:ryno_charred_stick=Charred Stick
-item.utilitycraft:ryno_graphite=Graphite
-item.utilitycraft:ryno_graphite_rod=Graphite Rod
-item.utilitycraft:ryno_reactor_core=Reactor Core
+item.utilitycraft:ryno_energizing_crystal=Energizing Crystal §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_cooling_unit=Cooling Unit §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_charred_stick=Charred Stick §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_graphite=Graphite §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_graphite_rod=Graphite Rod §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_reactor_core=Reactor Core §9 \n   @Nuclear Engineering
