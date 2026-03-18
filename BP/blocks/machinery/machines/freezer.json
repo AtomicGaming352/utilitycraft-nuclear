@@ -31,14 +31,13 @@
 			"utilitycraft:simple_machine": {
 				"rotation": "facing",
 				"entity": {
-					"name": "freezer",
 					"input_type": "simple",
 					"output_type": "simple"
 				},
 				"machine": {
 					"energy_cap": 256000,
 					"energy_cost": 3200,
-					"rate_speed_base": 15,
+					"rate_speed_base": 10,
 					"upgrades": [
 						4,
 						5
@@ -50,10 +49,10 @@
 					"output": "minecraft:ice",
 					"amount": 1
 				},
-				"utilitycraft:water_ball": {
+				"utilitycraft:water_bucket": {
 					"output": "minecraft:ice",
 					"amount": 1,
-          "required": 2,
+					"requied": 2
 				}
 			},
 			"minecraft:geometry": "geometry.utilitycraft_block_2",
