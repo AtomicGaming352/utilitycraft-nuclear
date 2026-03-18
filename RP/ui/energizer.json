@@ -1,6 +1,6 @@
 {
-    "namespace": "simple_machine",
-    "simple_machine_top": {
+    "namespace": "energizer",
+    "energizer_top": {
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
@@ -74,7 +74,7 @@
                     ]
                 }
             },
-            { // Progress
+            {
                 "machinery@common_machines.machinery": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
@@ -147,7 +147,7 @@
                                 "layer": 5,
                                 "controls": [
                                     {
-                                        "simple_machine_top@simple_machine.simple_machine_top": {}
+                                        "energizer_top@energizer.energizer_top": {}
                                     },
                                     {
                                         "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
@@ -172,4 +172,4 @@
             }
         ]
     }
-}
+}}
