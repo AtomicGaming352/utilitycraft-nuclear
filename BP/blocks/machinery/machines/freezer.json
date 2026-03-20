@@ -39,7 +39,7 @@
 				"machine": {
 					"energy_cap": 256000,
 					"energy_cost": 3200,
-					"rate_speed_base": 10,
+					"rate_speed_base": 30,
 					"upgrades": [
 						4,
 						5
@@ -49,12 +49,14 @@
 			"utilitycraft:machine_recipes": {
 				"minecraft:water_bucket": {
 					"output": "minecraft:ice",
-					"amount": 1
+					"amount": 1,
+					"cost": 4800
 				},
-				"utilitycraft:water_bucket": {
+				"utilitycraft:water_ball": {
 					"output": "minecraft:ice",
 					"amount": 1,
-					"requied": 2
+					"requied": 2,
+					"cost": 6400
 				}
 			},
 			"minecraft:geometry": "geometry.utilitycraft_block_2",
