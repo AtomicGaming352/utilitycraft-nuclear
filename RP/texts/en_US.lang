@@ -60,3 +60,8 @@ item.utilitycraft:ryno_charred_stick=Charred Stick §9 \n   @Nuclear Engineering
 item.utilitycraft:ryno_graphite=Graphite §9 \n   @Nuclear Engineering
 item.utilitycraft:ryno_graphite_rod=Graphite Rod §9 \n   @Nuclear Engineering
 item.utilitycraft:ryno_reactor_core=Reactor Core §9 \n   @Nuclear Engineering
+
+
+## Categories
+neoutility:itemGroup.name.nuengigens=Generators (§2Nuclear Engineering§r)
+neoutility:itemGroup.name.nuengimachines=Machines (§2Nuclear Engineering§r)
