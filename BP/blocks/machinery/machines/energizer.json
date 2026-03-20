@@ -39,7 +39,7 @@
 				"machine": {
 					"energy_cap": 256000,
 					"energy_cost": 3200,
-					"rate_speed_base": 10,
+					"rate_speed_base": 30,
 					"upgrades": [
 						4,
 						5
@@ -49,11 +49,13 @@
 			"utilitycraft:machine_recipes": {
 				"minecraft:iron_ingot": {
 					"output": "utilitycraft:energized_iron_ingot",
-					"amount": 1
+					"amount": 1,
+					"cost": 6400
 				},
-				"utilitycraft:ryno_raw_uranium": {
+				"utilitycraft:ryno_uranium_ingot": {
 					"output": "utilitycraft:ryno_refined_uranium",
-					"amount": 1
+					"amount": 1,
+					"cost": 7200
 				}
 			},
 			"minecraft:geometry": "geometry.utilitycraft_block_2",
