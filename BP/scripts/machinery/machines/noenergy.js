@@ -1,12 +1,8 @@
 import { Machine } from "DoriosCore/machinery/index.js"
-import { crusherRecipes } from "../../config/recipes/crusher.js";
-import { furnaceRecipes } from "../../config/recipes/furnace.js";
-import { pressRecipes } from "../../config/recipes/press.js";
+import { decayerRecipes } from "../../config/recipes/decayer.js";
 
-const UTILITYCRAFT_RECIPES = {
-    'crusher': crusherRecipes,
-    'furnace': furnaceRecipes,
-    'presser': pressRecipes
+const RYNO_RECIPES = {
+    'decayer': decayerRecipes
 }
 
 const INPUTSLOT = 3
@@ -22,7 +18,7 @@ DoriosAPI.register.blockComponent('ryno_no_energy_machine', {
     beforeOnPlayerPlace(e, { params: settings }) {
         Machine.spawnEntity(e, settings, (entity) => {
             entity.addTag("creative");
-entity.runCommand(`scoreboard players set @s energy 6900`);
+entity.runCommand(`scoreboard players set @s energy 6969`);
             entity.setItem(1, 'utilitycraft:arrow_right_0', 1, " ")
         });
     },
@@ -54,7 +50,7 @@ entity.runCommand(`scoreboard players set @s energy 6900`);
         const recipesComponent = block.getComponent("utilitycraft:machine_recipes")?.customComponentParameters?.params
         let recipes;
         if (recipesComponent.type) {
-            recipes = UTILITYCRAFT_RECIPES[recipesComponent.type]
+            recipes = RYNO_RECIPES[recipesComponent.type]
         } else {
             recipes = recipesComponent
         }
@@ -145,5 +141,3 @@ entity.runCommand(`scoreboard players set @s energy 6900`);
         Machine.onDestroy(e);
     }
 });
-
-DoriosAPI.register.blockComponent('machine_recipes', {})
