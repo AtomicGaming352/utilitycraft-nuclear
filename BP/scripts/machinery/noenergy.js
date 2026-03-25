@@ -21,6 +21,9 @@ DoriosAPI.register.blockComponent('ryno_no_energy_machine', {
      */
     beforeOnPlayerPlace(e, { params: settings }) {
         Machine.spawnEntity(e, settings, (entity) => {
+            if (!entity.hasTag("creative")) {
+            entity.addTag("creative"); 
+            }
             entity.setItem(1, 'utilitycraft:arrow_right_0', 1, " ")
         });
     },
