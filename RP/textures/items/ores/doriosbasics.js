@@ -5,8 +5,8 @@ system.sendScriptEvent(
   "ftbquests:create_chapter",
   JSON.stringify({
     id: "dorios_basics",
-    title: "api.demo.title",
-    description: "api.demo.desc",
+    title: "dorios.basics.title",
+    description: "dorios.basics.desc",
     icon: "utilitycraft:wooden_hammer",
   }),
 );
@@ -28,31 +28,68 @@ system.sendScriptEvent(
               item_id: "utilitycraft:flint_knife",
             },
             "01" :{
+              type: "ftb_quest:block_break",
+              block_id: "minecraft:leaves",
+            },
+            "02": {
               type: "ftb_quest:item_collected",
-              item_id: "utilitycraft:flint_knife",
+              item_id: "utilitycraft:fiber",
+              count: 4,
+            },
+            "03": {
+              type: "ftb_quest:item_collected",
+              item_id: "minecraft:string",
+              count: 5,
             },
           },
         },
-        rewards: [{ type: "ftb_quest:item", item: "minecraft:diamond", count: 3 }],
+        rewards: [{ type: "ftb_quest:xp", amount: 10 }],
       },
       {
-        id: "cook_beef",
-        name: "api.demo.cook_beef.name",
-        description: "api.demo.cook_beef.desc",
+        id: "hammers",
+        name: "dorios.quests.hammers.name",
+        description: "dorios.quests.hammers.desc",
         icon: "minecraft:cooked_beef",
         tasks: {
           anyOf: {
             "00": {
-              type: "ftb_quest:item_use_complete",
-              item_id: "minecraft:cooked_beef",
-              consumes_item: true,
+              type: "ftb_quest:item_collected",
+              item_id: "utilitycraft:wooden_hammer",
+            },
+            "01": {
+              type: "ftb_quest:item_collected",
+              item_id: "utilitycraft:stone_hammer",
+            },
+            "02": {
+              type: "ftb_quest:item_collected",
+              item_id: "utilitycraft:copper_hammer",
+            },
+            "03": {
+              type: "ftb_quest:item_collected",
+              item_id: "utilitycraft:iron_hammer",
+            },
+            "04": {
+              type: "ftb_quest:item_collected",
+              item_id: "utilitycraft:steel_hammer",
+            },
+            "05": {
+              type: "ftb_quest:item_collected",
+              item_id: "utilitycraft:gold_hammer",
+            },
+            "06": {
+              type: "ftb_quest:item_collected",
+              item_id: "utilitycraft:diamond_hammer",
+            },
+            "07": {
+              type: "ftb_quest:item_collected",
+              item_id: "utilitycraft:netherite_hammer",
             },
           },
         },
-        rewards: [{ type: "ftb_quest:item", item: "minecraft:diamond", count: 3 }],
+        rewards: [{ type: "ftb_quest:xp", amount: 10 }],
       },
     ],
   }),
 );
 
-system.sendScriptEvent("ftbquests:commit_chapter", JSON.stringify({ chapter_id: "api_demo" }));
+system.sendScriptEvent("ftbquests:commit_chapter", JSON.stringify({ chapter_id: "dorios_basics" }));
