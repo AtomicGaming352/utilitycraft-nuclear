@@ -6,6 +6,15 @@
 			"menu_category": {
 				"category": "construction"
 			},
+
+{
+	"format_version": "1.20.80",
+	"minecraft:block": {
+		"description": {
+			"identifier": "utilitycraft:ryno_energizer",
+			"menu_category": {
+				"category": "construction"
+			},
 			"states": {
 				"utilitycraft:on": [
 					false,
@@ -33,18 +42,21 @@
 				"entity": {
 					"type": "machine",
 					"inventory_size": 7,
-					"input_slot": "3",
-					"output_slot": "6"
+					"input_slot": 3,
+					"output_slot": 6
 				},
 				"machine": {
-					"energy_cap": 256000,
-					"energy_cost": 3200,
-					"rate_speed_base": 30,
+					"energy_cap": 64000,
+					"energy_cost": 800,
+					"rate_speed_base": 20,
 					"upgrades": [
 						4,
 						5
 					]
 				}
+			},
+			"utilitycraft:special_container": {
+				"Input Slot": 3
 			},
 			"utilitycraft:machine_recipes": {
 				"minecraft:iron_ingot": {
@@ -389,4 +401,6 @@
 			}
 		]
 	}
+			}
+			}
 }
