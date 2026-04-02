@@ -11,7 +11,7 @@ if (!radProtection) {
   radProtection = world.scoreboard.addObjective("radprotection", "Radiation Protection");
 }
 
-// Run every 3 seconds (60 ticks)
+// Tier 1
 system.runInterval(() => {
   for (const player of world.getPlayers()) {
 
@@ -21,6 +21,59 @@ system.runInterval(() => {
 
     // Condition
     if (radiation >= 32 && protection < 12) {
+      player.addEffect("nausea", 80, { amplifier: 0 });
+    }
+  }
+}, 400);
+system.runInterval(() => {
+  for (const player of world.getPlayers()) {
+
+    // Get scores safely
+    let radiation = rad.getScore(player) ?? 0;
+    let protection = radProtection.getScore(player) ?? 0;
+
+    // Condition
+    if (radiation >= 64 && protection < 12) {
+      player.addEffect("nausea", 100, { amplifier: 0 });
+    }
+  }
+}, 360);
+system.runInterval(() => {
+  for (const player of world.getPlayers()) {
+
+    // Get scores safely
+    let radiation = rad.getScore(player) ?? 0;
+    let protection = radProtection.getScore(player) ?? 0;
+
+    // Condition
+    if (radiation >= 96 && protection < 12) {
+      player.addEffect("nausea", 140, { amplifier: 0 });
+    }
+  }
+}, 280);
+system.runInterval(() => {
+  for (const player of world.getPlayers()) {
+
+    // Get scores safely
+    let radiation = rad.getScore(player) ?? 0;
+    let protection = radProtection.getScore(player) ?? 0;
+
+    // Condition
+    if (radiation >= 128 && protection < 12) {
+      player.addEffect("nausea", 180, { amplifier: 0 });
+    }
+  }
+}, 240);
+// Tier 2
+system.runInterval(() => {
+  for (const player of world.getPlayers()) {
+
+    // Get scores safely
+    let radiation = rad.getScore(player) ?? 0;
+    let protection = radProtection.getScore(player) ?? 0;
+
+    // Condition
+    if (radiation >=  && protection < 12) {
       player.addEffect("nausea", 80, { amplifier: 0 });
     }
   }
@@ -90,3 +143,4 @@ system.runInterval(() => {
     }
   }
 }, 200);
+// Tier 3(WIP)
