@@ -33,11 +33,11 @@
 				"entity": {
 					"type": "machine",
 					"inventory_size": 7,
-					"input_slot": "3",
-					"output_slot": "6"
+					"input_slot": 3,
+					"output_slot": 6
 				},
 				"machine": {
-					"energy_cap": 256000,
+					"energy_cap": 265000,
 					"energy_cost": 3200,
 					"rate_speed_base": 30,
 					"upgrades": [
@@ -46,17 +46,21 @@
 					]
 				}
 			},
+			"utilitycraft:special_container": {
+				"Input Slot": 3
+			},
 			"utilitycraft:machine_recipes": {
 				"minecraft:water_bucket": {
 					"output": "minecraft:ice",
-					"amount": 1,
-					"cost": 4800
+					"amount": 1
 				},
 				"utilitycraft:water_ball": {
 					"output": "minecraft:ice",
-					"amount": 1,
-					"requied": 2,
-					"cost": 6400
+					"amount": 1
+				},
+				"utilitycraft:blank_upgrade": {
+					"output": "utilitycraft:energy_upgrade:",
+					"amount": 1
 				}
 			},
 			"minecraft:geometry": "geometry.utilitycraft_block_2",
