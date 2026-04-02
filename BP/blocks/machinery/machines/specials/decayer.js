@@ -1,0 +1,386 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:block": {
+		"description": {
+			"identifier": "utilitycraft:ryno_decayer",
+			"menu_category": {
+				"category": "construction"
+			},
+			"states": {
+				"utilitycraft:on": [
+					false,
+					true
+				],
+				"utilitycraft:axis": [
+					"east",
+					"west",
+					"north",
+					"south",
+					"up",
+					"down"
+				],
+				"utilitycraft:rotation": [
+					0,
+					1,
+					2,
+					3
+				]
+			}
+		},
+		"components": {
+			"utilitycraft:ryno_no_energy_machine": {
+				"rotation": "facing",
+				"entity": {
+					"type": "machine",
+					"inventory_size": 7,
+					"input_slot": 3,
+					"output_slot": 6
+				},
+				"machine": {
+					"energy_cap": 6969,
+					"energy_cost": 800,
+					"rate_speed_base": 20,
+					"upgrades": [
+						4,
+						5
+					]
+				}
+			},
+			"utilitycraft:special_container": {
+				"Input Slot": 3
+			},
+			"utilitycraft:machine_recipes": {
+        "type": "decayer"
+			},
+			"minecraft:geometry": "geometry.utilitycraft_block_2",
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "utilitycraft_ryno_energizer_off",
+					"render_method": "alpha_test"
+				}
+			},
+			"minecraft:tick": {
+				"interval_range": [
+					2,
+					2
+				]
+			},
+			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 1
+			},
+			"minecraft:destructible_by_explosion": false,
+			"tag:dorios:machine": {},
+			"tag:dorios:energy": {},
+			"tag:dorios:item": {},
+			"tag:minecraft:is_pickaxe_item_destructible": {}
+		},
+		"permutations": [
+			{
+				"condition": "q.block_state('utilitycraft:on') == true ",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "utilitycraft_ryno_energizer_on",
+							"render_method": "alpha_test"
+						}
+					},
+					"minecraft:light_emission": 4
+				}
+			},
+			// ─── NORTH ───────────────────────────────
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'north' && q.block_state('utilitycraft:rotation') == 0",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							180,
+							0
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'north' && q.block_state('utilitycraft:rotation') == 1",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							180,
+							-90
+						] // +270° around X
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'north' && q.block_state('utilitycraft:rotation') == 2",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							180,
+							180
+						] // +180° around X
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'north' && q.block_state('utilitycraft:rotation') == 3",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							180,
+							90
+						] // +90° around X
+					}
+				}
+			},
+			// ─── SOUTH ───────────────────────────────
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'south' && q.block_state('utilitycraft:rotation') == 0",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							0,
+							0
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'south' && q.block_state('utilitycraft:rotation') == 1",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							0,
+							90
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'south' && q.block_state('utilitycraft:rotation') == 2",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							0,
+							180
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'south' && q.block_state('utilitycraft:rotation') == 3",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							0,
+							-90
+						]
+					}
+				}
+			},
+			// ─── EAST ───────────────────────────────
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'east' && q.block_state('utilitycraft:rotation') == 0",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							90,
+							0
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'east' && q.block_state('utilitycraft:rotation') == 1",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							90,
+							0,
+							90
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'east' && q.block_state('utilitycraft:rotation') == 2",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							270,
+							180
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'east' && q.block_state('utilitycraft:rotation') == 3",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							-90,
+							0,
+							-90
+						]
+					}
+				}
+			},
+			// ─── WEST ───────────────────────────────
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'west' && q.block_state('utilitycraft:rotation') == 0",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							270,
+							0
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'west' && q.block_state('utilitycraft:rotation') == 1",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							90,
+							180,
+							-90
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'west' && q.block_state('utilitycraft:rotation') == 2",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							90,
+							180
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'west' && q.block_state('utilitycraft:rotation') == 3",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							-90,
+							180,
+							90
+						]
+					}
+				}
+			},
+			// ─── UP ───────────────────────────────
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'up' && q.block_state('utilitycraft:rotation') == 0",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							-90,
+							0,
+							0
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'up' && q.block_state('utilitycraft:rotation') == 1",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							-90,
+							90,
+							0
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'up' && q.block_state('utilitycraft:rotation') == 2",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							-90,
+							180,
+							0
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'up' && q.block_state('utilitycraft:rotation') == 3",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							-90,
+							270,
+							0
+						]
+					}
+				}
+			},
+			// ─── DOWN ───────────────────────────────
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'down' && q.block_state('utilitycraft:rotation') == 0",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							90,
+							0,
+							0
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'down' && q.block_state('utilitycraft:rotation') == 1",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							90,
+							90,
+							0
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'down' && q.block_state('utilitycraft:rotation') == 2",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							90,
+							180,
+							0
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'down' && q.block_state('utilitycraft:rotation') == 3",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							90,
+							270,
+							0
+						]
+					}
+				}
+			}
+		]
+	}
+}
