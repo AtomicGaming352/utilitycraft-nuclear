@@ -18,7 +18,14 @@
 			"minecraft:map_color": "#ffffff",
 			"minecraft:loot": "loot_tables/ryno_vanadium_ore_loot.json",
 			"tag:minecraft:is_pickaxe_item_destructible": {},
-			"tag:minecraft:iron_tier_destructible": {}
+			"tag:minecraft:iron_tier_destructible": {},
+			"minecraft:geometry": "minecraft:geometry.full_block",
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "utilitycraft_ryno_vanadium",
+					"render_method": "opaque"
+				}
+			}
 		}
 	}
 }
