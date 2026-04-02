@@ -24,7 +24,7 @@ system.runInterval(() => {
       player.addEffect("nausea", 80, { amplifier: 0 });
     }
   }
-}, 400);
+}, 2400);
 system.runInterval(() => {
   for (const player of world.getPlayers()) {
 
@@ -37,7 +37,7 @@ system.runInterval(() => {
       player.addEffect("nausea", 100, { amplifier: 0 });
     }
   }
-}, 360);
+}, 2100);
 system.runInterval(() => {
   for (const player of world.getPlayers()) {
 
@@ -50,7 +50,7 @@ system.runInterval(() => {
       player.addEffect("nausea", 140, { amplifier: 0 });
     }
   }
-}, 280);
+}, 1800);
 system.runInterval(() => {
   for (const player of world.getPlayers()) {
 
@@ -63,7 +63,7 @@ system.runInterval(() => {
       player.addEffect("nausea", 180, { amplifier: 0 });
     }
   }
-}, 240);
+}, 1500);
 // Tier 2
 system.runInterval(() => {
   for (const player of world.getPlayers()) {
@@ -73,11 +73,15 @@ system.runInterval(() => {
     let protection = radProtection.getScore(player) ?? 0;
 
     // Condition
-    if (radiation >=  && protection < 12) {
+    if (radiation >= 144 && protection < 12) {
+      player.addEffect("nausea", 80, { amplifier: 0 });
+      player.addDamage(1);
+    }
+    else if (radiation >= 144 && protection < 24) {
       player.addEffect("nausea", 80, { amplifier: 0 });
     }
   }
-}, 400);
+}, 1200);
 system.runInterval(() => {
   for (const player of world.getPlayers()) {
 
@@ -86,11 +90,11 @@ system.runInterval(() => {
     let protection = radProtection.getScore(player) ?? 0;
 
     // Condition
-    if (radiation >= 48 && protection < 12) {
+    if (radiation >= 160 && protection < 12) {
       player.addEffect("nausea", 100, { amplifier: 0 });
     }
   }
-}, 360);
+}, 1160);
 system.runInterval(() => {
   for (const player of world.getPlayers()) {
 
@@ -103,7 +107,7 @@ system.runInterval(() => {
       player.addEffect("nausea", 120, { amplifier: 0 });
     }
   }
-}, 320);
+}, 1120);
 system.runInterval(() => {
   for (const player of world.getPlayers()) {
 
@@ -116,7 +120,7 @@ system.runInterval(() => {
       player.addEffect("nausea", 140, { amplifier: 0 });
     }
   }
-}, 280);
+}, 1080);
 system.runInterval(() => {
   for (const player of world.getPlayers()) {
 
