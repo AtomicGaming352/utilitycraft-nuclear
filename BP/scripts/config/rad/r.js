@@ -1,9 +1,9 @@
 import { world, system, ItemStack } from "@minecraft/server";
 const RAD_OBJECTIVE_ID = "rad";
 const PROTECTION_OBJECTIVE_ID = "radprotection";
-const CLOSED_CORE_ID = "crownbossyt:demon_core_closed";
-const OPEN_CORE_ID = "crownbossyt:demon_core_open";
-const GEIGER_ID = "crownbossyt:geiger_counter";
+const CLOSED_CORE_ID = "utilitycraft:crown_demon_core_closed";
+const OPEN_CORE_ID = "utilitycraft:crown_demon_core_open";
+const GEIGER_ID = "utilitycraft:crown_geiger_counter";
 const RAD_FROM_CLOSED_CORE_PER_SECOND = 20;
 const GEIGER_DURATION_TICKS = 200;
 const TIER_TICK_INTERVAL = 20;
