@@ -6,22 +6,10 @@ function getOrCreateObjective(id, displayName) {
     return objective;
 }
 const radProtItems = {
-    "minecraft:leather_helmet": 1,
-    "minecraft:iron_helmet": 2,
-    "minecraft:diamond_helmet": 3,
-    "minecraft:netherite_helmet": 4,
-    "minecraft:leather_chestplate": 1,
-    "minecraft:iron_chestplate": 2,
-    "minecraft:diamond_chestplate": 3,
-    "minecraft:netherite_chestplate": 4,
-    "minecraft:leather_leggings": 1,
-    "minecraft:iron_leggings": 2,
-    "minecraft:diamond_leggings": 3,
-    "minecraft:netherite_leggings": 4,
-    "minecraft:leather_boots": 1,
-    "minecraft:iron_boots": 2,
-    "minecraft:diamond_boots": 3,
-    "minecraft:netherite_boots": 4
+    "utilitycraft:ryno_hazmat_mask": 3,
+    "utilitycraft:ryno_hazmat_suit": 4,
+    "utilitycraft:ryno_hazmat_trousers": 3,
+    "utilitycraft:ryno_hazmat_boots: 2
 };
 system.runInterval(() => {
     const radProtection = getOrCreateObjective(RAD_PROTECTION_OBJECTIVE, "Radiation Protection");
