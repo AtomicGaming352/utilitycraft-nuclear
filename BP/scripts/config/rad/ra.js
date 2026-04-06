@@ -9,7 +9,7 @@ const radProtItems = {
     "utilitycraft:ryno_hazmat_mask": 3,
     "utilitycraft:ryno_hazmat_suit": 4,
     "utilitycraft:ryno_hazmat_trousers": 3,
-    "utilitycraft:ryno_hazmat_boots: 2
+    "utilitycraft:ryno_hazmat_boots": 2
 };
 system.runInterval(() => {
     const radProtection = getOrCreateObjective(RAD_PROTECTION_OBJECTIVE, "Radiation Protection");
