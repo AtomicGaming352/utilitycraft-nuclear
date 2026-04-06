@@ -1,14 +1,14 @@
 import { world, system } from "@minecraft/server";
 const RAD_OBJECTIVE_ID = "rad";
 const itemRadiation = new Map([
-    ["utilitycraft:ryno_refined_uranium", 3.6],
-    ["utilitycraft:ryno_refined_uranium_nugget", 0.4],
-    ["utilitycraft:ryno_plutonium", 27],
-    ["utilitycraft:ryno_plutonium_nugget", 3]
+    ["utilitycraft:ryno_refined_uranium", 15],
+    ["utilitycraft:ryno_refined_uranium_nugget", 5],
+    ["utilitycraft:ryno_plutonium_ingot", 45],
+    ["utilitycraft:ryno_plutonium_chunk", 15]
 ]);
 const tierCaps = [
-    { ids: ["utilitycraft:ryno_refined_uranium", "utilitycraft:ryno_refined_uranium_nugget"], cap: 100 },
-    { ids: ["utilitycraft:ryno_plutonium", "utilitycraft:ryno_plutonium_nugget"], cap: 200 }
+    { ids: ["utilitycraft:ryno_refined_uranium", "utilitycraft:ryno_refined_uranium_nugget"], cap: 256 },
+    { ids: ["utilitycraft:ryno_plutonium_ingot", "utilitycraft:ryno_plutonium_chunk"], cap: 512 }
 ];
 function getOrCreateObjective(id, displayName) {
     let objective = world.scoreboard.getObjective(id);
