@@ -1,0 +1,49 @@
+{
+    "format_version": "1.26.10",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:ryno_hazmat_boots",
+            "menu_category": {
+                "category": "equipment",
+                "group": "minecraft:itemGroup.name.boots"
+            }
+        },
+        "components": {
+            "minecraft:icon": "wiki:custom_boots",
+            // Prevents the item from stacking with itself like vanilla armor
+            "minecraft:max_stack_size": 1,
+            // Allows the armor to receive enchantments specific to its type
+            "minecraft:enchantable": {
+                "slot": "armor_feet",
+                "value": 10
+            },
+            // Allows the item to be worn in the feet slot, displaying the attachable defined in the RP
+            "minecraft:wearable": {
+                "slot": "slot.armor.feet",
+                "protection": 1
+            },
+            // Allows the item to take damage when worn
+            "minecraft:durability": {
+                "damage_chance": {
+                    "min": 60,
+                    "max": 100
+                },
+                "max_durability": 429
+            },
+            // Allows the item to be repaired after it has taken damage
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": ["utilitycraft:ryno_lead_ingot"], // The items that can be used to repair this item
+                        "repair_amount": "q.max_durability * 0.25" // Increases the durability by 25%
+                    }
+                ]
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "minecraft:is_armor"
+                ]
+            }
+        }
+    }
+}
