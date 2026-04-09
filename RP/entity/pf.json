@@ -2,12 +2,12 @@
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
-      "identifier": "crownbossyt:pf",
+      "identifier": "neoutility:pf",
       "materials": {
         "default": "entity_alphatest"
       },
       "textures": {
-        "default": "textures/items/pf"
+        "default": "textures/items/crafting_components/misc/pf"
       },
       "geometry": {
         "default": "geometry.item_sprite"
