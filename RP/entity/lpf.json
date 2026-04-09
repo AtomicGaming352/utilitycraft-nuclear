@@ -2,12 +2,12 @@
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
-      "identifier": "crownbossyt:lpf",
+      "identifier": "neoutility:lpf",
       "materials": {
         "default": "entity_alphatest"
       },
       "textures": {
-        "default": "textures/items/lpf"
+        "default": "textures/items/crafting_components/misc/lpf"
       },
       "geometry": {
         "default": "geometry.item_sprite"
