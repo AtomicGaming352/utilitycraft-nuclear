@@ -1,0 +1,44 @@
+{
+  "format_version": "1.20.50",
+  "minecraft:entity": {
+    "description": {
+      "is_spawnable": false,
+      "is_summonable": true,
+      "is_experimental": false,
+      "identifier": "crownbossyt:hpf"
+    },
+    "component_groups": {
+      "despawn": {
+        "minecraft:instant_despawn": {}
+      }
+    },
+    "components": {
+      "minecraft:collision_box": {
+        "width": 0.25,
+        "height": 0.25
+      },
+      "minecraft:projectile": {
+        "on_hit": {
+          "definition_event": {
+            "affect_projectile": true,
+            "event": "crownbossyt:despawn"
+          },
+          "remove_on_hit": {}
+        },
+        "power": 1.5,
+        "gravity": 0.03,
+        "angle_offset": 0.0
+      },
+      "minecraft:physics": {}
+    },
+    "events": {
+      "crownbossyt:despawn": {
+        "add": {
+          "component_groups": [
+            "despawn"
+          ]
+        }
+      }
+    }
+  }
+}
