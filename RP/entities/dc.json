@@ -2,12 +2,12 @@
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
-      "identifier": "crownbossyt:demon_core_closed_projectile",
+      "identifier": "utilitycraft:ryno_demon_core_closed_projectile",
       "materials": {
         "default": "entity_alphatest"
       },
       "textures": {
-        "default": "textures/items/demonc"
+        "default": "textures/items/crafting_components/misc/demonc"
       },
       "geometry": {
         "default": "geometry.item_sprite"
