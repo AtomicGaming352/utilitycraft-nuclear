@@ -22,7 +22,7 @@
 			"minecraft:geometry": "minecraft:geometry.full_block",
 			"minecraft:material_instances": {
 				"*": {
-					"texture": "utilitycraft_ryno_vanadium",
+					"texture": "utilitycraft_ryno_vanadium_ore",
 					"render_method": "opaque"
 				}
 			}
