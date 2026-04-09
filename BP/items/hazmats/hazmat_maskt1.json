@@ -1,0 +1,48 @@
+{
+    "format_version": "1.26.10",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:ryno_hazmat_mask",
+            "menu_category": {
+                "category": "equipment",
+                "group": "minecraft:itemGroup.name.helmet"
+            }
+        },
+        "components": {
+            "minecraft:icon": "wiki:custom_helmet",
+            "minecraft:max_stack_size": 1,
+            // Allows the armor to receive enchantments specific to its type
+            "minecraft:enchantable": {
+                "slot": "armor_head",
+                "value": 10
+            },
+            // Allows the item to be worn in the head slot, displaying the attachable defined in the RP
+            "minecraft:wearable": {
+                "slot": "slot.armor.head",
+                "protection": 3
+            },
+            // Allows the item to take damage when worn
+            "minecraft:durability": {
+                "damage_chance": {
+                    "min": 60,
+                    "max": 100
+                },
+                "max_durability": 363
+            },
+            // Allows the item to be repaired after it has taken damage
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": ["utilitycraft:ryno_lead_ingot"], // The items that can be used to repair this item
+                        "repair_amount": "q.max_durability * 0.25" // Increases the durability by 25%
+                    }
+                ]
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "minecraft:is_armor",
+                ]
+            }
+        }
+    }
+            }
