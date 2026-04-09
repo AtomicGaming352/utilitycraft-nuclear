@@ -40,7 +40,7 @@
             },
             "minecraft:tags": {
                 "tags": [
-                    "minecraft:is_armor",
+                    "minecraft:is_armor"
                 ]
             }
         }
