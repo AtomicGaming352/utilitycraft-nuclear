@@ -5,7 +5,7 @@
       "is_spawnable": false,
       "is_summonable": true,
       "is_experimental": false,
-      "identifier": "crownbossyt:pf"
+      "identifier": "neoutility:pf"
     },
     "component_groups": {
       "despawn": {
