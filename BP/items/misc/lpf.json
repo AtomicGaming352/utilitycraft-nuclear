@@ -8,7 +8,7 @@
       }
     },
     "components": {
-      "minecraft:icon": "lpf",
+      "minecraft:icon": "neoutility_lpf",
       "minecraft:max_stack_size": 16,
       "minecraft:projectile": {
         "projectile_entity": "neoutility:lpf"
