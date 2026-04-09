@@ -2,19 +2,16 @@
   "format_version": "1.20.50",
   "minecraft:item": {
     "description": {
-      "identifier": "crownbossyt:lesser_purifying_flask",
+      "identifier": "neoutility:lesser_purifying_flask",
       "menu_category": {
         "category": "equipment"
       }
     },
     "components": {
-      "minecraft:display_name": {
-        "value": "Lesser Purifying Flask \u00a77(-50 Rad)"
-      },
       "minecraft:icon": "lpf",
       "minecraft:max_stack_size": 16,
       "minecraft:projectile": {
-        "projectile_entity": "crownbossyt:lpf"
+        "projectile_entity": "neoutility:lpf"
       },
       "minecraft:throwable": {
         "do_swing_animation": true,
