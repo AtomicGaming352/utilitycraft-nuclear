@@ -103,6 +103,24 @@
 		},
 		"utilitycraft_ryno_charred_stick": {
 			"textures": "textures/items/crafting_components/misc/charred_stick"
+		},
+		"utilitycraft_ryno_demon_open": {
+			"textures": "textures/items/crafting_components/misc/demon"
+		},
+		"utilitycraft_ryno_demon_closed": {
+			"textures": "textures/items/crafting_components/misc/demonc"
+		},
+		"neoutility_lpf": {
+			"textures": "textures/items/crafting_components/misc/lpf"
+		},
+		"neoutility_pf": {
+			"textures": "textures/items/crafting_components/misc/pf"
+		},
+		"neoutility_hpf": {
+			"textures": "textures/items/crafting_components/misc/hpf"
+		},
+		"utilitycraft_ryno_geiger": {
+			"textures": "textures/items/tools/geiger_counter"
 		}
 	}
 }
