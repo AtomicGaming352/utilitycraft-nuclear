@@ -13,7 +13,8 @@ export const decayerRecipes = {}
 
 const decayerRecipesRegister = {
     // ========== URANIUM ==========
-    "utilitycraft:ryno_refined_uranium": { output: "utilitycraft:ryno_plutonium_chunk", amount: 1, cost 3200 },}
+    "utilitycraft:ryno_refined_uranium": { output: "utilitycraft:ryno_plutonium_chunk", amount: 1, cost 3200 }
+}
 
 world.afterEvents.worldLoad.subscribe(() => {
     system.sendScriptEvent("utilitycraft:register_decayer_recipe", JSON.stringify(decayerRecipesRegister));
