@@ -1,12 +1,12 @@
 import { world, system, ItemStack } from "@minecraft/server";
 const RAD_SCOREBOARD = "rad";
-const CLOSED_CORE_PROJECTILE = "crownbossyt:demon_core_closed_projectile";
-const OPEN_CORE_ID = "crownbossyt:demon_core_open";
-const CLOSED_CORE_ID = "crownbossyt:demon_core_closed";
+const CLOSED_CORE_PROJECTILE = "utilitycraft:ryno_demon_core_closed_projectile";
+const OPEN_CORE_ID = "utilitycraft:crown_demon_core_open";
+const CLOSED_CORE_ID = "utilitycraft:crown_demon_core_closed";
 const FLASK_RAD_REDUCTION = {
-    "crownbossyt:lesser_purifying_flask": 50,
-    "crownbossyt:purifying_flask": 100,
-    "crownbossyt:greater_purifying_flask": 200
+    "neoutility:lesser_purifying_flask": 50,
+    "neoutility:purifying_flask": 100,
+    "neoutility:greater_purifying_flask": 200
 };
 function getOrCreateObjective(id, displayName) {
     let objective = world.scoreboard.getObjective(id);
