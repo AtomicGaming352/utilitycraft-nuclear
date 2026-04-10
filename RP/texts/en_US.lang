@@ -35,6 +35,14 @@ item.utilitycraft:ryno_refined_uranium=Refined Uranium §9 \n   @Nuclear Enginee
 item.utilitycraft:ryno_refined_uranium_nugget=Refined Uranium Nugget §9 \n   @Nuclear Engineering
 item.utilitycraft:ryno_uranium_ingot=Uranium Ingot §9 \n   @Nuclear Engineering
 
+item.neoutility:neptunium_ingot=Neptunium Ingot §9 \n   @Nuclear Engineering
+item.neoutility:stabilized_neptunium_ingot=Stabilized Neptunium Ingot §9 \n   @Nuclear Engineering
+item.neoutility:neptunium_chunk=Neptunium Chunk §9 \n   @Nuclear Engineering
+
+item.neoutility:neptunium_ingot=Neptunium Ingot §9 \n   @Nuclear Engineering
+item.neoutility:stabilized_neptunium_ingot=Stabilized Neptunium Ingot §9 \n   @Nuclear Engineering
+item.neoutility:neptunium_chunk=Neptunium Chunk §9 \n   @Nuclear Engineering
+
 item.utilitycraft:ryno_sulfur_chunk=Sulfur Chunk §9 \n   @Nuclear Engineering
 item.utilitycraft:ryno_deepslate_sulfur_chunk=Deepslate Sulfur Chunk §9 \n   @Nuclear Engineering
 item.utilitycraft:ryno_sulfur_dust=Sulfur Dust §9 \n   @Nuclear Engineering
