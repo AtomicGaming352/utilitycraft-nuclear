@@ -1,5 +1,5 @@
 pack.name=Nuclear Engineering:Age of Radiation RP!
-pack.description=[V0.1.3]  \n  Adds nuclear capabilities to UtilityCraft, including for power generation and explosives.
+pack.description=[V0.1.4]  \n  Adds nuclear capabilities to UtilityCraft, including for power generation and explosives.
 
 ## Blocks
 tile.utilitycraft:ryno_deepslate_lead_ore.name=Deepslate Lead Ore §9 \n   @Nuclear Engineering
@@ -35,13 +35,11 @@ item.utilitycraft:ryno_refined_uranium=Refined Uranium §9 \n   @Nuclear Enginee
 item.utilitycraft:ryno_refined_uranium_nugget=Refined Uranium Nugget §9 \n   @Nuclear Engineering
 item.utilitycraft:ryno_uranium_ingot=Uranium Ingot §9 \n   @Nuclear Engineering
 
-item.neoutility:neptunium_ingot=Neptunium Ingot §9 \n   @Nuclear Engineering
-item.neoutility:stabilized_neptunium_ingot=Stabilized Neptunium Ingot §9 \n   @Nuclear Engineering
-item.neoutility:neptunium_chunk=Neptunium Chunk §9 \n   @Nuclear Engineering
+item.neoutility:plutonium_ingot=Plutonium Ingot §9 \n   @Nuclear Engineering
+item.neoutility:purified_plutonium_ingot=Purified Plutonium Ingot §9 \n   @Nuclear Engineering
 
 item.neoutility:neptunium_ingot=Neptunium Ingot §9 \n   @Nuclear Engineering
 item.neoutility:stabilized_neptunium_ingot=Stabilized Neptunium Ingot §9 \n   @Nuclear Engineering
-item.neoutility:neptunium_chunk=Neptunium Chunk §9 \n   @Nuclear Engineering
 
 item.utilitycraft:ryno_sulfur_chunk=Sulfur Chunk §9 \n   @Nuclear Engineering
 item.utilitycraft:ryno_deepslate_sulfur_chunk=Deepslate Sulfur Chunk §9 \n   @Nuclear Engineering
@@ -56,8 +54,8 @@ item.utilitycraft:ryno_vanadium_dust=Vanadium Dust §9 \n   @Nuclear Engineering
 item.utilitycraft:ryno_vanadium_ingot=Vanadium Ingot §9 \n   @Nuclear Engineering
 
 item.utilitycraft:ryno_empty_fuel_cell=Empty Fuel Cell §9 \n   @Nuclear Engineering
-item.utilitycraft:ryno_nuclear_fuel=Nuclear Fuel §9 \n   @Nuclear Engineering
-item.utilitycraft:ryno_coolant_nuclear_fuel=Cooled Nuclear Fuel §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_nuclear_fuel=Uranic Fuel §9 \n   @Nuclear Engineering
+item.utilitycraft:ryno_coolant_nuclear_fuel=Cooled Uranic Fuel §9 \n   @Nuclear Engineering
 item.utilitycraft:ryno_coolant_cell=Coolant Cell §9 \n   @Nuclear Engineering
 item.utilitycraft:ryno_sulfuric_saltpeter_canister=Sulfuric Saltpeter Canister §9 \n   @Nuclear Engineering
 item.utilitycraft:ryno_sulfuric_acid_canister=Sulfuric Acid Canister §9 \n   @Nuclear Engineering
