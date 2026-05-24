@@ -1,7 +1,7 @@
 import { Generator, EnergyStorage } from "DoriosCore/machinery/index.js"
-import { basicnuclearFuels } from "../../config/recipes/reactor.js";
+import { coolantFuels } from "../../config/recipes/reactor.js";
 
-DoriosAPI.register.blockComponent('ryno_basic_reactor', {
+DoriosAPI.register.blockComponent('ryno_coolant_reactor', {
     /**
      * Runs before the machine is placed by the player.
      * 
@@ -63,7 +63,7 @@ DoriosAPI.register.blockComponent('ryno_basic_reactor', {
                     generator.displayEnergy()
                     return
                 }
-                const fuel = basicnuclearFuels.find(f => item?.typeId.includes(f.id));
+                const fuel = coolantFuels.find(f => item?.typeId.includes(f.id));
                 if (!fuel) {
                     generator.setLabel(`
 §r§eInvalid Fuel
