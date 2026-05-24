@@ -1,3 +1,3 @@
 import "./recipes/reactor.js"
-import "./recipes/decayer.js"
+import "./recipes/crusher.js"
 import "./rad/main.js"
