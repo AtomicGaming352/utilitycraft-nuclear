@@ -14,7 +14,7 @@ tile.utilitycraft:ryno_basic_reactor.name=§eBasic Reactor \n §7 Rate: 800 DE/t
 tile.utilitycraft:ryno_advanced_reactor.name=§cAdvanced Reactor \n §7 Rate: 1.6 kDE/t §9 \n   @Nuclear Engineering
 tile.utilitycraft:ryno_advanced_coolant_reactor.name=§cAdvanced Coolant Reactor \n §7 Rate: 1.6 kDE/t §9 \n   @Nuclear Engineering
 tile.utilitycraft:ryno_energizer.name=Energizer\n§7- Accepted upgrades:\n   §a§7 §b§7 §9 \n   @Nuclear Engineering
-tile.utilitycraft:ryno_freezer.name=Item Freezer\n§7- Accepted upgrades:\n   §a§7 §b§7 §9 \n   @Nuclear Engineering
+tile.utilitycraft:ryno_freezer.name=Item Freezer [§bMK I§r]\n§7- Accepted upgrades:\n   §a§7 §b§7 §9 \n   @Nuclear Engineering
 
 entity.utilitycraft:ryno_reactor.name=Reactor
 entity.utilitycraft:ryno_energizer.name=Energizer
