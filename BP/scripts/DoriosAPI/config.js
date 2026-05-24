@@ -47,11 +47,16 @@
  * ```
  */
 export const addonData = {
-    name: "UtilityCraft",
-    author: "Dorios Studios",
-    identifier: "utilitycraft",
-    version: "3.4.2"
-}
+    name: "Nuclear Engineering:Age of Radiation",
+    author: "NeoUtility Studios",
+    identifier: "utilitycraft_nuclear_engineering",
+    version: "0.1.4",
+    dependencies: {
+        "utilitycraft": {
+            version: "3.4.2",  // Required version
+            name: "UtilityCraft",  // Custom name to display
+            warning: "Please update to the latest version."  // Custom warning message
+                }
 
 /**
  * Module Imports
