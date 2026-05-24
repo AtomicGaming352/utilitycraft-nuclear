@@ -1,7 +1,7 @@
 import { Generator, EnergyStorage } from "DoriosCore/machinery/index.js"
-import { solidFuels } from "../../config/recipes/fuel.js";
+import { basicnuclearFuels } from "../../config/recipes/reactor.js";
 
-DoriosAPI.register.blockComponent('furnator', {
+DoriosAPI.register.blockComponent('ryno_basic_reactor', {
     /**
      * Runs before the machine is placed by the player.
      * 
@@ -63,7 +63,7 @@ DoriosAPI.register.blockComponent('furnator', {
                     generator.displayEnergy()
                     return
                 }
-                const fuel = solidFuels.find(f => item?.typeId.includes(f.id));
+                const fuel = basicnuclearFuels.find(f => item?.typeId.includes(f.id));
                 if (!fuel) {
                     generator.setLabel(`
 §r§eInvalid Fuel
