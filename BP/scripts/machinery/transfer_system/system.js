@@ -1,8 +1,9 @@
 import { world, system, ItemStack } from '@minecraft/server'
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui'
-import { FluidManager } from '../managers.js'
+import { FluidStorage } from "DoriosCore/index.js"
+import { openSmartImporterMenu } from './smart_importer.js'
 
-const offsets = [
+export const offsets = [
     { x: 1, y: 0, z: 0 },
     { x: -1, y: 0, z: 0 },
     { x: 0, y: 1, z: 0 },
@@ -11,14 +12,23 @@ const offsets = [
     { x: 0, y: 0, z: -1 },
 ];
 
+export const blockFaceOffsets = {
+    down: [0, 1, 0],
+    up: [0, -1, 0],
+    south: [0, 0, -1],
+    north: [0, 0, 1],
+    east: [-1, 0, 0],
+    west: [1, 0, 0],
+}
+
 const types = {
     energy: startRescanEnergy,
     item: startRescanItem,
     fluid: startRescanFluid
 }
 
-
 //#region Utils
+
 /**
  * Updates the block geometry states to visually connect with valid neighbors.
  *
@@ -62,8 +72,30 @@ export function updateGeometry(block, tag) {
             neighbor.typeId.includes("dustveyn:storage_drawers")
         );
 
-        const shouldConnect = sameNetwork || validContainer;
+        let shouldConnect = false;
 
+        // Contenedores siempre se conectan si es item conduit
+        if (!shouldConnect && isItemConduit && validContainer) {
+            shouldConnect = true;
+        }
+
+        // Shared network tag check
+        if (!shouldConnect && neighbor.hasTag(tag)) {
+            const isNeighborPipe = neighbor.hasTag("dorios:isTube");
+
+            if (!isNeighborPipe) {
+                // Non-pipe neighbor: connect without color requirement
+                shouldConnect = true;
+            } else {
+                // Pipe neighbor: match color
+                for (const t of block.getTags()) {
+                    if (t.startsWith("dorios:color.") && neighbor.hasTag(t)) {
+                        shouldConnect = true;
+                        break;
+                    }
+                }
+            }
+        }
         // Apply state only if changed (avoid redundant permutations)
         if (block.getState(`utilitycraft:${dir}`) !== shouldConnect) {
             block.setState(`utilitycraft:${dir}`, shouldConnect);
@@ -127,13 +159,35 @@ export function updateGeometryExporter(block, tag) {
             continue;
         }
 
-        const connectsSameTag = neighbor.hasTag(tag);
-        const connectsContainer =
-            isItemConduit &&
-            (DoriosAPI.constants.vanillaContainers.includes(neighbor.typeId) ||
-                neighbor.typeId.includes("dustveyn:storage_drawers"));
+        const validContainer = isItemConduit && (
+            DoriosAPI.constants.vanillaContainers.includes(neighbor.typeId) ||
+            neighbor.typeId.includes("dustveyn:storage_drawers")
+        );
 
-        const shouldConnect = connectsSameTag || connectsContainer;
+        let shouldConnect = false;
+
+        // Contenedores siempre se conectan si es item conduit
+        if (!shouldConnect && isItemConduit && validContainer) {
+            shouldConnect = true;
+        }
+
+        // Shared network tag check
+        if (!shouldConnect && neighbor.hasTag(tag)) {
+            const isNeighborPipe = neighbor.hasTag("dorios:isTube");
+
+            if (!isNeighborPipe) {
+                // Non-pipe neighbor: connect without color requirement
+                shouldConnect = true;
+            } else {
+                // Pipe neighbor: match color
+                for (const t of block.getTags()) {
+                    if (t.startsWith("dorios:color.") && neighbor.hasTag(t)) {
+                        shouldConnect = true;
+                        break;
+                    }
+                }
+            }
+        }
         newPerm = newPerm.withState(`utilitycraft:${visualDir}`, shouldConnect);
     }
 
@@ -184,7 +238,7 @@ export function updatePipes(block, tag) {
         }
 
         // Update geometry according to role
-        if (neighbor.hasTag("dorios:isExporter")) {
+        if (neighbor.hasTag("dorios:isExporter") || neighbor.hasTag("dorios:isImporter")) {
             updateGeometryExporter(neighbor, tag);
         } else if (neighbor.hasTag("dorios:isTube")) {
             updateGeometry(neighbor, tag);
@@ -199,14 +253,14 @@ export function updatePipes(block, tag) {
  *
  * This function performs a breadth-first search (BFS) through all adjacent blocks
  * tagged with `dorios:energy`. It explores connected cables, ports, and energy sources,
- * and for each detected source or port, it delegates to {@link searchEnergyContainers}
+ * and for each detected source or port, it delegates to {@link searchEnergyStorages}
  * to locate all connected energy containers.
  *
  * ## Behavior:
  * - Stops scanning when a block lacks the `dorios:energy` tag.
  * - Detects cables (`utilitycraft:energy_cable`) and follows all six directions recursively.
- * - Detects generator or port entities (`dorios:energy_source`, `dorios:port`) and
- *   triggers `searchEnergyContainers` for each one.
+ * - Detects generator or port entities (`dorios:energy_source`, `dorios:multiblock.port`) and
+ *   triggers `searchEnergyStorages` for each one.
  * - Automatically adds connected blocks or entities to the appropriate generator’s tag list.
  *
  * This function should be called when a cable, machine, or generator
@@ -232,7 +286,7 @@ export function startRescanEnergy(startPos, dimension) {
         const block = dimension.getBlock(pos);
         if (!block.hasTag('dorios:energy')) continue
 
-        if (block?.typeId === "utilitycraft:energy_cable") {
+        if (block?.hasTag('dorios:isTube')) {
             for (const offset of offsets) {
                 queue.push({
                     x: pos.x + offset.x,
@@ -244,7 +298,7 @@ export function startRescanEnergy(startPos, dimension) {
         }
         // Get the entity at this position (should only be one if it's a machine/gen)
         let entity = dimension.getEntitiesAtBlockLocation(pos)[0];
-        if (block.hasTag('dorios:port')) {
+        if (block.hasTag('dorios:multiblock.port')) {
             entity = dimension.getEntities({ tags: [`input:[${pos.x},${pos.y},${pos.z}]`] })[0]
             let queue = []
             if (!entity) continue
@@ -254,13 +308,13 @@ export function startRescanEnergy(startPos, dimension) {
                     const [x, y, z] = tag.slice(7, -1).split(",").map(Number);
                     queue.push(dimension.getBlock({ x, y, z })?.location);
                 });
-            searchEnergyContainers(queue, entity)
+            searchEnergyStorages(queue, entity)
             continue
         }
         if (entity?.getComponent("minecraft:type_family")?.hasTypeFamily("dorios:energy_source")) {
             let queue = []
             queue.push(pos)
-            searchEnergyContainers(queue, entity)
+            searchEnergyStorages(queue, entity)
         }
     }
 }
@@ -287,9 +341,9 @@ export function startRescanEnergy(startPos, dimension) {
  *
  * @example
  * // Called internally by startRescanEnergy
- * searchEnergyContainers([{x:10, y:65, z:20}], generatorEntity);
+ * searchEnergyStorages([{x:10, y:65, z:20}], generatorEntity);
  */
-function searchEnergyContainers(startQueue, gen) {
+function searchEnergyStorages(startQueue, gen) {
 
     const offsets = [
         { x: 1, y: 0, z: 0 },
@@ -335,7 +389,7 @@ function searchEnergyContainers(startQueue, gen) {
         }
         let entity = dimension.getEntitiesAtBlockLocation(pos)[0];
 
-        if (block?.hasTag('dorios:energy') && block?.hasTag('dorios:port')) {
+        if (block?.hasTag('dorios:energy') && block?.hasTag('dorios:multiblock.port')) {
             entity = dimension.getEntities({ tags: [`input:[${pos.x},${pos.y},${pos.z}]`] })[0]
             if (entity) machines.push(entity.location);
             continue
@@ -356,43 +410,450 @@ function searchEnergyContainers(startQueue, gen) {
 }
 //#endregion
 
+//#region UtilityCraft - Filter Viewer UI
+
+function showFilteredItems(player, mode, items) {
+    const form = new ActionFormData();
+    form.title("Filtered Items");
+
+    const header =
+        mode === "whitelist"
+            ? "§aWhitelist§r\nOnly these items are allowed.\n"
+            : "§cBlacklist§r\nThese items are blocked.\n";
+
+    const list =
+        items.length === 0
+            ? "§7(empty)"
+            : items.map(i => '- ' + DoriosAPI.utils.formatIdToText(i)).join("\n");
+
+    form.body(header + "\n" + list);
+    form.button("Close");
+
+    form.show(player);
+}
+
+//#endregion
+
 //#region Items
 
+/**
+ * Opens the Exporter configuration menu.
+ * Includes:
+ *  - Power toggle (on/off)
+ *  - Transfer mode selection ("nearest" | "farthest" | "round")
+ *  - Whitelist/Blacklist filter options
+ *  - Item filter list (add/remove)
+ *
+ * @param {Block} block The Exporter block.
+ * @param {Player} player The interacting player.
+ */
+function openExporterMenu(block, player) {
+    const entity = block.dimension.getEntitiesAtBlockLocation(block.location)[0];
+    if (!entity) return;
+
+    const isOff = entity.getDynamicProperty('isOff') ?? false;
+    const mode = entity.getDynamicProperty('transferMode') ?? 'nearest';
+    const whitelist = entity.getDynamicProperty('utilitycraft:whitelistOn') ?? true;
+    const acceptedItems = entity.getTags()
+        .filter(tag => !tag.startsWith('ent:') && !tag.startsWith('van:') && !tag.startsWith('dra:') && !tag.startsWith('update') && !tag.startsWith('imp:'));
+
+    // ──────────────────────────────────────────────
+    // 1️⃣ Base menu
+    // ──────────────────────────────────────────────
+    const menu = new ActionFormData()
+        .title('Item Exporter Settings')
+        .body(`§7Manage item export settings.\n\n§rCurrent mode: §e${DoriosAPI.utils.capitalizeFirst(mode)}\n§rPower: §a${isOff ? 'OFF' : 'ON'}`);
+
+    // Buttons
+    menu.button(`${isOff ? 'Turn ON' : 'Turn OFF'}\n§8Toggle exporter activity`, `textures/ui/toggle_${isOff ? 'on' : 'off'}`);
+    menu.button(`Transfer Mode\n§8(${DoriosAPI.utils.capitalizeFirst(mode)})`, 'textures/items/compass_item.png');
+    menu.button(`${whitelist ? 'Whitelist' : 'Blacklist'} Mode\n§8Click to toggle`, whitelist
+        ? 'textures/items/misc/whitelist.png'
+        : 'textures/items/misc/blacklist.png');
+    // View filter contents
+    menu.button(
+        "View Filter Contents\n§8List all filtered items",
+        "textures/ui/icon_book_writable.png"
+    );
+    menu.button('Add Item\n§8(Add item from Mainhand)', 'textures/ui/icon_import.png');
+    menu.button('Remove Item\n§8(Select to remove)', 'textures/ui/trash_default.png');
+
+    // ──────────────────────────────────────────────
+    // 2️⃣ Handle menu actions
+    // ──────────────────────────────────────────────
+    menu.show(player).then(result => {
+        const selection = result.selection;
+        if (selection === undefined) return;
+
+        switch (selection) {
+            case 0: // Toggle ON/OFF
+                entity.setDynamicProperty('isOff', !isOff);
+                player.onScreenDisplay.setActionBar(`§7Exporter ${isOff ? '§aEnabled' : '§cDisabled'}`);
+                return;
+
+            case 1: // Transfer Mode
+                openTransferModeMenu(entity, player);
+                return;
+
+            case 2: // Toggle whitelist/blacklist
+                entity.setDynamicProperty('utilitycraft:whitelistOn', !whitelist);
+                player.onScreenDisplay.setActionBar(`§7Filter mode set to: §e${!whitelist ? 'Whitelist' : 'Blacklist'}`);
+                return;
+
+            // View list
+            case 3: {
+                showFilteredItems(player, `${whitelist ? 'whitelist' : 'blacklist'}`, acceptedItems);
+                break;
+            }
+
+            case 4: { // Add item
+                const hasFilter = block.permutation.getState('utilitycraft:filter')
+                if (!hasFilter) {
+                    player.onScreenDisplay.setActionBar(`§cMissing filter upgrade.`);
+                    return
+                }
+                const mainHand = player.getComponent('equippable')?.getEquipment('Mainhand');
+                if (mainHand) {
+                    entity.addTag(`${mainHand.typeId}`);
+                    player.onScreenDisplay.setActionBar(`§aAdded: §r${mainHand.typeId}`);
+                } else {
+                    player.onScreenDisplay.setActionBar(`§cYou must hold an item in your main hand.`);
+                }
+                return;
+            }
+
+            case 5: // Remove item
+                openRemoveItemMenu(block, player, entity, acceptedItems);
+                return;
+        }
+    });
+}
+
+/**
+ * Opens a modal form for selecting transfer mode.
+ *
+ * Modes:
+ *  - nearest → send to closest entity first.
+ *  - farthest → send to farthest entity first.
+ *  - round → rotate between all entities sequentially.
+ *
+ * @param {Entity} entity Exporter entity.
+ * @param {Player} player Player using the menu.
+ */
+function openTransferModeMenu(entity, player) {
+    const mode = entity.getDynamicProperty('transferMode') ?? 'nearest';
+    const modes = ['Nearest', 'Farthest', 'Round'];
+    const current = modes.indexOf(mode);
+    const defaultIndex = current >= 0 ? current : 0;
+
+    const modal = new ModalFormData()
+        .title('Transfer Mode')
+        .dropdown('Select item transfer behavior:', modes, { defaultValueIndex: defaultIndex });
+
+    modal.show(player).then(result => {
+        const [selection] = result.formValues;
+        const newMode = modes[selection] ?? 'Nearest';
+        entity.setDynamicProperty('transferMode', newMode.toLowerCase());
+        player.onScreenDisplay.setActionBar(`§7Transfer mode set to: §e${newMode}`);
+    });
+}
+
+/**
+ * Opens a submenu to remove items from the Exporter filter.
+ *
+ * @param {Block} block The exporter block.
+ * @param {Player} player The player.
+ * @param {Entity} entity The exporter entity.
+ * @param {string[]} items List of filterable tags.
+ */
+function openRemoveItemMenu(block, player, entity, items) {
+    if (!items || items.length === 0) {
+        player.onScreenDisplay.setActionBar('§cNo items to remove.');
+        return;
+    }
+
+    const menu = new ActionFormData()
+        .title('Remove Item')
+        .body('§7Select an item to remove from the filter.');
+
+    for (const tag of items) {
+        menu.button(DoriosAPI.utils.formatIdToText(tag));
+    }
+
+    menu.show(player).then(result => {
+        const selection = result.selection;
+        if (selection === undefined) {
+            openExporterMenu(block, player);
+            return;
+        }
+
+        const tagToRemove = items[selection];
+        entity.removeTag(tagToRemove);
+        player.onScreenDisplay.setActionBar(`§cRemoved: §r${tagToRemove}`);
+
+        openExporterMenu(block, player);
+    });
+}
+
+/**
+ * UtilityCraft - Item Exporter
+ * Pulls items from the attached container and exports them to its cached item network.
+ * Network cache key: dorios:item_nodes (JSON array of {x,y,z})
+ * Mode key: transferMode → "nearest" | "farthest" | "round"
+ * Round index key: dorios:item_round_idx (number)
+ */
+DoriosAPI.register.blockComponent('exporter', {
+    // ─────────────────────────────────────────────────────────────
+    // Keep your original entity spawn / cleanup
+    // ─────────────────────────────────────────────────────────────
+    beforeOnPlayerPlace(e) {
+        const { block } = e
+        let { x, y, z } = block.location
+        y += 0.375; x += 0.5; z += 0.5
+        system.run(() => {
+            const entity = block.dimension.spawnEntity('utilitycraft:pipe', { x, y, z })
+            entity.setDynamicProperty('utilitycraft:whitelistOn', true)
+            // defaults for mode & round
+            entity.setDynamicProperty('transferMode', 'nearest')
+            entity.setDynamicProperty('dorios:item_round_idx', 0)
+        })
+    },
+
+    onPlayerBreak(e) {
+        const ent = e.block.dimension.getEntitiesAtBlockLocation(e.block.center())[0]
+        if (ent) ent.remove()
+    },
+
+    onPlayerInteract(e) {
+        const { block, player } = e
+        if (player.isSneaking) return
+
+        const mainHand = player.getComponent('equippable')?.getEquipment('Mainhand')
+        if (mainHand?.typeId?.includes('upgrade')) return
+
+        openExporterMenu(block, player) // tu menú existente si lo deseas reutilizar
+    },
+
+    /**
+     * Main tick: export items to item-network
+     */
+    onTick({ block, dimension }) {
+        if (!globalThis.worldLoaded) return
+
+        // ─────────────────────────────────────────────────────────
+        // 1) Get exporter entity & basic flags
+        // ─────────────────────────────────────────────────────────
+        const exporter = dimension.getEntitiesAtBlockLocation(block.location)[0]
+        if (!exporter) return
+
+        // Optional off toggle
+        if (exporter.getDynamicProperty('isOff')) return
+
+        const hasFilter = block.permutation.getState('utilitycraft:filter') == 1
+        const whiteList = exporter.getDynamicProperty('utilitycraft:whitelistOn') ?? true
+        // ─────────────────────────────────────────────────────────
+        // 2) Determine source container (adjacent to block_face)
+        // ─────────────────────────────────────────────────────────
+        const face = block.permutation.getState('minecraft:block_face')
+        const off = blockFaceOffsets[face] || [0, -1, 0]
+        const sourceLoc = {
+            x: block.location.x + off[0],
+            y: block.location.y + off[1],
+            z: block.location.z + off[2],
+        }
+
+        const source = DoriosAPI.containers.getContainerAt(sourceLoc, dimension)
+        const sourceInv = source.container
+        if (!sourceInv) return
+
+        const [startSlot, endSlot] = DoriosAPI.containers.getAllowedOutputRange(
+            source.entity ?? sourceInv
+        )
+        if (startSlot < 0) return false;
+
+        // Early out if source empty
+        if (sourceInv.emptySlotsCount == sourceInv.size) return
+
+        // ─────────────────────────────────────────────────────────
+        // 3) Load or rebuild cached network nodes (like Energy/Fluid)
+        //    Cache key: dorios:item_nodes
+        // ─────────────────────────────────────────────────────────
+        let cached = exporter.getDynamicProperty('dorios:item_nodes')
+        const needsUpdate = exporter.hasTag('updateNetwork')
+
+        if (!cached || needsUpdate) {
+            const pos = exporter.location
+            // Build from tags: pos:[x,y,z] or van:[x,y,z]
+            const positions = exporter.getTags()
+                .filter(t => t.startsWith('ent:[') || t.startsWith('van:[') || t.startsWith('imp:['))
+                .map(tag => {
+                    const [x, y, z] = tag.slice(5, -1).split(',').map(Number)
+                    return { x, y, z }
+                })
+                .sort((a, b) =>
+                    DoriosAPI.math.distanceBetween(pos, a) - DoriosAPI.math.distanceBetween(pos, b)
+                )
+            exporter.setDynamicProperty('dorios:item_nodes', JSON.stringify(positions))
+            exporter.removeTag('updateNetwork')
+            cached = JSON.stringify(positions)
+        }
+
+        /** @type {{x:number,y:number,z:number}[]} */
+        const targets = JSON.parse(cached || '[]')
+        if (targets.length === 0) return
+
+        // ─────────────────────────────────────────────────────────
+        // 4) Select distribution mode and order targets
+        //    Mode key: transferMode → "nearest" | "farthest" | "round"
+        //    Round index: dorios:item_round_idx
+        // ─────────────────────────────────────────────────────────
+        const mode = exporter.getDynamicProperty('transferMode') || 'nearest'
+        let orderedTargets = [...targets]
+        if (mode === 'farthest') {
+            orderedTargets.reverse()
+        } else if (mode === 'round') {
+            const idx = Number(exporter.getDynamicProperty('dorios:item_round_idx') || 0) % orderedTargets.length
+            orderedTargets = orderedTargets.slice(idx).concat(orderedTargets.slice(0, idx))
+        }
+
+        // ─────────────────────────────────────────────────────────
+        // 5) Attempt a single transfer per tick (like hoppers)
+        //    - Respects filter
+        //    - Stops on first successful move
+        // ─────────────────────────────────────────────────────────
+        const moved = { total: 0 }
+        const LIMIT = 64
+
+        for (let i = startSlot; i <= endSlot; i++) {
+            if (moved.total >= LIMIT) break
+
+            const it = sourceInv.getItem(i)
+            if (!it) continue
+
+            if (it.hasTag("utilitycraft:ui_element")) continue
+
+            if (hasFilter && (exporter.hasTag(`${it.typeId}`) !== whiteList)) continue
+
+            const didMove = tryPushSlotToTargets(sourceLoc, i, orderedTargets, dimension, exporter, moved, LIMIT, sourceInv)
+            if (didMove && mode === 'round') {
+                let idx = Number(exporter.getDynamicProperty('dorios:item_round_idx') || 0)
+                exporter.setDynamicProperty('dorios:item_round_idx', (idx + 1) % targets.length)
+            }
+        }
+    },
+})
+
+/**
+ * Tries to push a source slot to the first valid target in list.
+ *
+ * @param {{x:number,y:number,z:number}} sourceLoc
+ * @param {number} slotIndex
+ * @param {{x:number,y:number,z:number}[]} targets
+ * @param {Dimension} dim
+ * @param {Entity} exporter
+ * @returns {boolean} true if a transfer occurred
+ */
+function tryPushSlotToTargets(sourceLoc, slotIndex, targets, dim, exporter, moved, LIMIT, sourceInv) {
+    for (let loc of targets) {
+        let targetBlock = dim.getBlock(loc)
+        let targetEntity = dim.getEntitiesAtBlockLocation(loc)[0]
+
+        if (targetBlock?.typeId.includes("utilitycraft:item_importer")) {
+            // Load importer config from WORLD dynamic property
+            const key = `imp:${loc.x},${loc.y},${loc.z}`;
+            const data = world.getDynamicProperty(key);
+
+            // Get current item in source
+            const item = sourceInv?.getItem(slotIndex);
+            if (!item) return false;
+
+            // Determine real container in front of importer
+            const face = targetBlock.permutation.getState("minecraft:block_face");
+            const off = blockFaceOffsets[face];
+
+            // Replace target with the REAL container location
+            loc = {
+                x: loc.x + off[0],
+                y: loc.y + off[1],
+                z: loc.z + off[2],
+            };
+            const target = DoriosAPI.containers.getContainerAt(loc, dim)
+
+            if (!target.container) continue
+            // Apply importer whitelist / blacklist
+            if (data) {
+                const cfg = JSON.parse(data);  // { mode, items }
+                // Smart Importer
+                if (cfg.version == 1) {
+                    if (!cfg.blockId || cfg.blockId != target.block.typeId) continue
+                    const targetSlots = cfg?.itemMap[item.typeId]
+                    if (targetSlots) {
+                        moved.total += DoriosAPI.containers.transferItemToSlots(sourceInv, slotIndex, target.container, targetSlots) ?? 0
+                        if (moved.total >= LIMIT) return true
+                        continue
+                    }
+                    continue
+                }
+                if (cfg.items.length > 0) {
+                    const listed = cfg.items.includes(item.typeId);
+                    if (cfg.mode === "whitelist" && !listed) continue;
+                    if (cfg.mode === "blacklist" && listed) continue;
+                }
+            }
+        }
+
+        const targetHasFilter = targetBlock?.permutation?.getState?.('utilitycraft:filter') == 1
+
+        if (targetHasFilter && targetEntity) {
+            const item = sourceInv?.getItem(slotIndex)
+            if (!item) return false
+            const targetWhite = targetEntity.getDynamicProperty('utilitycraft:whitelistOn') ?? true
+            if ((targetEntity.hasTag(`${item.typeId}`) !== targetWhite)) continue
+        }
+        const movedCount = DoriosAPI.containers.transferItemsBetween(sourceLoc, loc, dim, slotIndex)
+        if (typeof movedCount === 'number' && movedCount > 0) {
+            moved.total += movedCount
+            if (moved.total >= LIMIT) return true
+        }
+    }
+    return false
+}
 
 
 /**
- * Scans connected item conduits and containers to build an item transfer network.
+ * Rebuilds an item conduit network using BFS.
  *
- * This function performs a breadth-first search (BFS) starting from the provided position,
- * traversing through all connected **item conduits** (`utilitycraft:item_conduit`)
- * and **exporters** (`utilitycraft:item_exporter`), collecting all reachable containers.
+ * Traverses all connected item conduits and exporters starting from the given position.
+ * Supports color-based networks using tags:
+ * - "dorios:color.default" → connects with all conduits/exporters
+ * - "dorios:color:<X>" → connects only with blocks/entities that share the same color tag
  *
- * ## Behavior
- * - Identifies all connected conduits and exporter entities.
- * - Detects valid container targets:
- *   - Vanilla containers (chests, barrels, hoppers, etc.).
- *   - Storage Drawers (`dustveyn:storage_drawers`).
- *   - Dorios container entities (tagged as `dorios:container`).
- * - Automatically excludes containers facing extractors to avoid loops.
- * - Adds container position tags (`van:[x,y,z]`, `ent:[x,y,z]`, `dra:[x,y,z]`)
- *   to each extractor for item transfer logic.
+ * The function collects valid container targets (vanilla containers, drawers, Dorios containers)
+ * and assigns their location tags ("van:[x,y,z]", "ent:[x,y,z]", "dra:[x,y,z]") to each exporter
+ * so they know where to output items.
  *
- * @param {{x:number, y:number, z:number}} startPos The starting block position of the scan.
+ * Exporters facing a container block that container to prevent feedback loops.
+ *
+ * @param {{x:number, y:number, z:number}} startPos Starting position of the scan.
  * @param {import('@minecraft/server').Dimension} dimension The dimension where the scan takes place.
- * @returns {void}
- *
- * @example
- * // Rebuilds the item conduit network when a block is placed or removed
- * startRescanItem(block.location, block.dimension);
  */
-function startRescanItem(startPos, dimension) {
+async function startRescanItem(startPos, dimension) {
     const queue = [startPos];
     const visited = new Set();
     const inputs = [];
     const extractors = [];
-    let cablesUsed = 0
+    let cablesUsed = 0;
 
-
+    const initialBlock = dimension.getBlock(startPos);
+    let networkColorTag = "dorios:color.default";
+    if (initialBlock?.getTags) {
+        for (const t of initialBlock.getTags()) {
+            if (t.startsWith("dorios:color.")) {
+                networkColorTag = t;
+                break;
+            }
+        }
+    }
     const globalBlockedTags = new Set();
 
     while (queue.length > 0) {
@@ -400,44 +861,83 @@ function startRescanItem(startPos, dimension) {
         const key = `${pos.x},${pos.y},${pos.z}`;
         if (visited.has(key)) continue;
         visited.add(key);
-
+        if (visited.size % 25 == 0) await system.waitTicks(1)
         const block = dimension.getBlock(pos);
+        if (!block) continue;
 
-        if (block?.typeId === "utilitycraft:item_conduit" || block?.typeId === "utilitycraft:item_exporter") {
-            cablesUsed += 1
+        if (
+            block.typeId.includes("utilitycraft:item_conduit") ||
+            block.typeId.includes("utilitycraft:item_exporter") ||
+            block.typeId.includes("utilitycraft:item_importer")
+        ) {
+            cablesUsed++;
+            if (!block.hasTag(networkColorTag)) continue;
+
+            const isImporter = block.typeId.includes("utilitycraft:item_importer");
+
+            let blockedOffset = null;
+
+            // Only importer blocks the front direction
+            if (isImporter) {
+                const face = block.permutation.getState("minecraft:block_face");
+                blockedOffset = blockFaceOffsets[face];
+                inputs.push(`imp:[${pos.x},${pos.y},${pos.z}]`);
+            }
+
+            // BFS scan (skip only importer front face)
             for (const offset of offsets) {
+
+                // Skip forward direction ONLY for importer
+                if (
+                    isImporter &&
+                    blockedOffset &&
+                    offset.x === blockedOffset[0] &&
+                    offset.y === blockedOffset[1] &&
+                    offset.z === blockedOffset[2]
+                ) {
+                    continue; // skip scanning into the container
+                }
+
                 queue.push({
                     x: pos.x + offset.x,
                     y: pos.y + offset.y,
-                    z: pos.z + offset.z,
+                    z: pos.z + offset.z
                 });
             }
+
+            // Exporter logic unchanged
+            if (block.typeId.includes("utilitycraft:item_exporter")) {
+                let ent = dimension.getEntitiesAtBlockLocation(pos)[0];
+                if (ent && ent.typeId === "utilitycraft:pipe") {
+                    extractors.push(ent);
+                }
+            }
+
+            continue;
         }
 
-        if (DoriosAPI.constants.vanillaContainers.includes(block?.typeId)) {
+
+        if (DoriosAPI.constants.vanillaContainers.includes(block.typeId)) {
             inputs.push(`van:[${pos.x},${pos.y},${pos.z}]`);
             continue;
         }
 
-        if (block?.typeId.includes('dustveyn:storage_drawers')) {
+        if (block.typeId.includes("dustveyn:storage_drawers")) {
             inputs.push(`dra:[${pos.x},${pos.y},${pos.z}]`);
             continue;
         }
 
-        let entity = dimension.getEntitiesAtBlockLocation(pos)[0];
-        if (block.hasTag('dorios:port') && block.hasTag('dorios:item')) {
-            entity = dimension.getEntities({ tags: [`input:[${pos.x},${pos.y},${pos.z}]`] })[0]
-            if (!entity) continue
-            const loc = entity.location
-            inputs.push(`ent:[${loc.x},${loc.y},${loc.z}]`);
-            continue
-        }
-        if (entity) {
-            if (entity.typeId === "utilitycraft:pipe") {
-                extractors.push(entity);
-                continue;
+        if (block.hasTag("dorios:multiblock.port") && block.hasTag("dorios:item")) {
+            let entity = dimension.getEntities({ tags: [`input:[${pos.x},${pos.y},${pos.z}]`] })[0];
+            if (entity) {
+                const loc = entity.location;
+                inputs.push(`ent:[${loc.x},${loc.y},${loc.z}]`);
             }
+            continue;
+        }
 
+        const entity = dimension.getEntitiesAtBlockLocation(pos)[0];
+        if (entity) {
             const tf = entity.getComponent("minecraft:type_family");
             if (tf?.hasTypeFamily("dorios:container")) {
                 inputs.push(`ent:[${pos.x},${pos.y},${pos.z}]`);
@@ -445,7 +945,8 @@ function startRescanItem(startPos, dimension) {
         }
     }
 
-    if (cablesUsed <= 0) return
+    if (cablesUsed <= 0) return;
+
     for (const ext of extractors) {
         const extLoc = ext.location;
         const extPos = {
@@ -456,12 +957,19 @@ function startRescanItem(startPos, dimension) {
 
         const block = dimension.getBlock(extPos);
         const face = block.permutation.getState("minecraft:block_face");
-        const faceOffset = blockFaceOffsets[face];
-
-        if (faceOffset) {
-            const bx = extPos.x + faceOffset[0];
-            const by = extPos.y + faceOffset[1];
-            const bz = extPos.z + faceOffset[2];
+        const off = blockFaceOffsets[face];
+        if (off) {
+            const bx = extPos.x + off[0];
+            const by = extPos.y + off[1];
+            const bz = extPos.z + off[2];
+            const offBlock = dimension.getBlock({ x: bx, y: by, z: bz })
+            if (offBlock && offBlock.hasTag("dorios:multiblock.port") && offBlock.hasTag("dorios:item")) {
+                let entity = dimension.getEntities({ tags: [`input:[${bx},${by},${bz}]`] })[0];
+                if (entity) {
+                    const loc = entity.location;
+                    globalBlockedTags.add(`ent:[${loc.x},${loc.y},${loc.z}]`);
+                }
+            }
             globalBlockedTags.add(`van:[${bx},${by},${bz}]`);
             globalBlockedTags.add(`ent:[${bx},${by},${bz}]`);
             globalBlockedTags.add(`dra:[${bx},${by},${bz}]`);
@@ -469,34 +977,756 @@ function startRescanItem(startPos, dimension) {
     }
 
     for (const ext of extractors) {
-        const oldTags = ext.getTags().filter(tag => tag.startsWith("van:") || tag.startsWith("ent:") || tag.startsWith("dra:"));
+        const oldTags = ext.getTags().filter(t =>
+            t.startsWith("van:") ||
+            t.startsWith("ent:") ||
+            t.startsWith("dra:") ||
+            t.startsWith("imp:")
+        );
         for (const tag of oldTags) ext.removeTag(tag);
 
         for (const tag of inputs) {
-            if (globalBlockedTags.has(tag)) continue;
-            ext.addTag(tag);
+            if (!globalBlockedTags.has(tag)) {
+                ext.addTag(tag);
+            }
         }
-        ext.addTag('updateNetwork')
+
+        ext.addTag("updateNetwork");
     }
-    // Log network creation
-    // const isNetwork = cablesUsed > 0 && extractors.length > 0
-    // if (isNetwork) console.warn(`[Item Network] Created a network with ${extractors.length} Exporter(s) and ${inputs.length} Container(s).`);
-    // return visited
 }
 
+//#region UtilityCraft - ITEM IMPORTER (Filtered Input Node)
+
+/**
+ * UtilityCraft - Item Importer
+ * 
+ * Works as a filtered input entry for item conduits.
+ * - NO entity is spawned
+ * - Filter configuration stored in world dynamic properties
+ * - UI identical style to exporter filter settings
+ * - Exporter treats importer as if it were the real container behind it
+ */
+
+DoriosAPI.register.blockComponent("item_importer", {
+
+    /**
+     * Initialize importer configuration in world dynamic properties.
+     */
+    beforeOnPlayerPlace(e) {
+        const { block } = e;
+        const key = getImporterKey(block);
+
+        system.run(() => {
+            world.setDynamicProperty(key, JSON.stringify({
+                version: 0,            // 0 = normal filter
+                mode: "whitelist",
+                items: []
+            }));
+        });
+    },
+
+    /**
+     * Remove importer dynamic property on break.
+     */
+    onPlayerBreak(e) {
+        const { block } = e;
+        const { x, y, z } = block.location;
+        world.setDynamicProperty(getImporterKey(block), undefined);
+    },
+
+    /**
+     * Open UI menu for configuring importer filters.
+     */
+    onPlayerInteract(e) {
+        const { block, player } = e;
+        if (player.isSneaking) return;
+
+        const hasFilter = block.permutation.getState('utilitycraft:filter') == 1
+        if (hasFilter) openImporterMenu(block, player);
+
+        const hasSmartFilter = block.permutation.getState('utilitycraft:smart_filter') == 1
+        if (hasSmartFilter) openSmartImporterMenu(block, player);
+    }
+});
+DoriosAPI.register.blockComponent("special_container", {})
+
+
+function getImporterKey(block) {
+    const { x, y, z } = block.location;
+    return `imp:${x},${y},${z}`;
+}
+
+/**
+ * Opens the filter configuration menu for an Item Importer.
+ * 
+ * @param {Block} block 
+ * @param {Player} player 
+ */
+function openImporterMenu(block, player) {
+    const { x, y, z } = block.location;
+    const key = `imp:${x},${y},${z}`;
+
+    let cfg = { version: 0, mode: "whitelist", items: [] };
+    const raw = world.getDynamicProperty(key);
+    if (raw) {
+        try { cfg = JSON.parse(raw); } catch { }
+    }
+    if (cfg.version !== 0) {
+        cfg = {
+            version: 0, mode: "whitelist", items: []
+        };
+    }
+    const modeText = cfg.mode === "whitelist" ? "Whitelist" : "Blacklist";
+
+    const menu = new ActionFormData()
+        .title("Item Importer Settings")
+        .body(`§7Configure importer filtering.\n\n§rCurrent Mode: §e${modeText}`);
+
+    // Toggle whitelist / blacklist
+    menu.button(
+        `${modeText}\n§8Click to toggle`,
+        cfg.mode === "whitelist"
+            ? "textures/items/misc/whitelist.png"
+            : "textures/items/misc/blacklist.png"
+    );
+
+    // View filter contents
+    menu.button(
+        "View Filter Contents\n§8List all filtered items",
+        "textures/ui/icon_book_writable.png"
+    );
+
+    // Add item (from main hand)
+    menu.button(
+        "Add Item\n§8(Add item from Mainhand)",
+        "textures/ui/icon_import.png"
+    );
+
+    // Remove item (opens another menu)
+    menu.button(
+        "Remove Item\n§8(Select item to remove)",
+        "textures/ui/trash_default.png"
+    );
+
+    // Close
+    menu.button("Close", "textures/ui/redX1.png");
+
+    menu.show(player).then(res => {
+        if (res.canceled) return;
+
+        switch (res.selection) {
+
+            // Toggle whitelist / blacklist
+            case 0: {
+                cfg.mode = cfg.mode === "whitelist" ? "blacklist" : "whitelist";
+                world.setDynamicProperty(key, JSON.stringify(cfg));
+                player.onScreenDisplay.setActionBar("§aFilter mode updated.");
+                // openImporterMenu(block, player);
+                break;
+            }
+
+            // View list
+            case 1: {
+                showFilteredItems(player, cfg.mode, cfg.items);
+                break;
+            }
+
+            // Add item (from main hand)
+            case 2: {
+                const mainhand = player.getComponent("equippable")?.getEquipment("Mainhand");
+                if (!mainhand) {
+                    player.onScreenDisplay.setActionBar("§cYou are not holding an item.");
+                    return openImporterMenu(block, player);
+                }
+                const id = mainhand.typeId;
+                if (!cfg.items.includes(id)) cfg.items.push(id);
+                world.setDynamicProperty(key, JSON.stringify(cfg));
+                player.onScreenDisplay.setActionBar(`§aAdded ${id} to filter.`);
+                // openImporterMenu(block, player);
+                break;
+            }
+
+            // Remove item
+            case 3: {
+                openImporterRemoveMenu(block, player, cfg, key);
+                break;
+            }
+        }
+    });
+}
+
+/**
+ * Opens a submenu to remove items from the Importer filter.
+ *
+ * @param {Block} block
+ * @param {Player} player
+ * @param {{mode:string, items:string[]}} cfg
+ * @param {string} key world dynamic property key (imp:x,y,z)
+ */
+function openImporterRemoveMenu(block, player, cfg, key) {
+    const items = cfg.items;
+
+    if (!items || items.length === 0) {
+        player.onScreenDisplay.setActionBar('§cNo items to remove.');
+        return openImporterMenu(block, player);
+    }
+
+    const menu = new ActionFormData()
+        .title('Remove Item')
+        .body('§7Select an item to remove from the filter.');
+
+    // Crear un botón por cada ítem
+    for (const id of items) {
+        menu.button(`${DoriosAPI.utils.formatIdToText(id)}`);
+    }
+
+    // Botón de cancelar
+    menu.button("Cancel");
+
+    menu.show(player).then(result => {
+        const selection = result.selection;
+
+        // Si canceló
+        if (selection === undefined || selection === items.length) {
+            return openImporterMenu(block, player);
+        }
+
+        const removedId = items[selection];
+
+        // Remover del array
+        items.splice(selection, 1);
+
+        // Guardar nueva config
+        world.setDynamicProperty(key, JSON.stringify(cfg));
+
+        player.onScreenDisplay.setActionBar(`§cRemoved: {"translate":"${removedId}"}`);
+
+        // Volver al menú principal
+        openImporterMenu(block, player);
+    });
+}
+
+//#endregion
 
 
 //#endregion
 
 //#region Fluids
 
+/**
+ * Opens the Fluid Extractor configuration menu.
+ * Includes:
+ *  - Power toggle (on/off)
+ *  - Transfer mode selection ("nearest" | "farthest" | "round")
+ *
+ * @param {Block} block The Fluid Extractor block.
+ * @param {Player} player The interacting player.
+ */
+function openFluidExtractorMenu(block, player) {
+    const entity = block.dimension.getEntitiesAtBlockLocation(block.location)[0];
+    if (!entity) return;
+    const acceptedFluids = entity.getTags()
+        .filter(tag => !tag.startsWith('ent:') && !tag.startsWith('tan:') && !tag.startsWith('update'));
 
+    const isOff = entity.getDynamicProperty('isOff') ?? false;
+    const mode = entity.getDynamicProperty('transferMode') ?? 'nearest';
+
+    // ──────────────────────────────────────────────
+    // 1️⃣ Base menu
+    // ──────────────────────────────────────────────
+    const menu = new ActionFormData()
+        .title('Fluid Extractor Settings')
+        .body(`§7Manage fluid extraction behavior.\n\n§rCurrent mode: §e${DoriosAPI.utils.capitalizeFirst(mode)}\n§rPower: §a${isOff ? 'OFF' : 'ON'}`);
+
+    // Buttons
+    menu.button(`${isOff ? 'Turn ON' : 'Turn OFF'}\n§8Toggle extractor activity`, `textures/ui/toggle_${isOff ? 'on' : 'off'}`);
+    menu.button(`Transfer Mode\n§8(${DoriosAPI.utils.capitalizeFirst(mode)})`, 'textures/items/compass_item.png');
+    // View filter contents
+    menu.button(
+        "View Filter Contents\n§8List all filtered fluids",
+        "textures/ui/icon_book_writable.png"
+    );
+    menu.button('Add Fluid Type\n§8(Add fluid from Mainhand)', 'textures/ui/icon_import.png');
+    menu.button('Add Fluid Type\n§8(Add fluid from Source)', 'textures/ui/icon_import.png');
+    menu.button(
+        "Remove Fluid\n§8(Select a fluid to remove)",
+        "textures/ui/trash_default.png"
+    );
+    // ──────────────────────────────────────────────
+    // 2️⃣ Handle menu actions
+    // ──────────────────────────────────────────────
+    menu.show(player).then(result => {
+        const selection = result.selection;
+        if (selection === undefined) return;
+
+        switch (selection) {
+            case 0: { // Toggle ON/OFF
+                entity.setDynamicProperty('isOff', !isOff);
+                player.onScreenDisplay.setActionBar(`§7Extractor ${isOff ? '§aEnabled' : '§cDisabled'}`);
+                break;
+            }
+
+            case 1: // Transfer Mode
+                openTransferModeMenu(entity, player);
+                break;
+            case 2: // list
+                showFilteredFluids(player, acceptedFluids);
+                break;
+
+            case 3: { // Add item
+                const hasFilter = block.permutation.getState('utilitycraft:filter')
+                if (!hasFilter) {
+                    player.onScreenDisplay.setActionBar(`§cMissing filter upgrade.`);
+                    return
+                }
+                const mainHand = player.getComponent('equippable')?.getEquipment('Mainhand');
+                if (!mainHand) {
+                    player.onScreenDisplay.setActionBar(`§cYou must hold an item in your main hand.`);
+                    return
+                }
+                const fluid = FluidStorage.itemFluidStorages[mainHand.typeId]
+                if (!fluid) {
+                    player.onScreenDisplay.setActionBar(`§cYou must hold an item that contains a fluid.`);
+                    return
+                }
+                entity.addTag(`${fluid.type}`);
+                return;
+            }
+            case 4: { // Add Fluid Type from Source
+                const hasFilter = block.permutation.getState('utilitycraft:filter');
+                if (!hasFilter) {
+                    player.onScreenDisplay.setActionBar(`§cMissing filter upgrade.`);
+                    return;
+                }
+
+                const face = block.permutation.getState("minecraft:block_face");
+                const off = blockFaceOffsets[face];
+                if (!off) return;
+
+                const { x, y, z } = block.location;
+                const bx = x + off[0];
+                const by = y + off[1];
+                const bz = z + off[2];
+                const dim = block.dimension;
+
+                let sourceEntity = dim.getEntitiesAtBlockLocation({ x: bx, y: by, z: bz })[0];
+                const sourceBlock = dim.getBlock({ x: bx, y: by, z: bz });
+
+                if (!sourceEntity) {
+                    if (
+                        !sourceBlock?.hasTag("dorios:multiblock.port") ||
+                        !sourceBlock?.hasTag("dorios:fluid")
+                    ) {
+                        player.onScreenDisplay.setActionBar(`§cNo fluid source.`);
+                        return;
+                    }
+
+                    sourceEntity = dim.getEntities({
+                        tags: [`input:[${bx},${by},${bz}]`]
+                    })[0];
+
+                    if (!sourceEntity) {
+                        player.onScreenDisplay.setActionBar(`§cNo fluid source.`);
+                        return;
+                    }
+                }
+
+                // ──────────────────────────────────────────────
+                // Initialize & read fluid managers
+                // ──────────────────────────────────────────────
+                const maxLiquids = FluidStorage.getMaxLiquids(sourceEntity);
+                const tanks = FluidStorage.initializeMultiple(sourceEntity, maxLiquids);
+
+                /** @type {{ manager: FluidStorage, type: string }[]} */
+                const validFluids = [];
+
+                tanks.forEach(manager => {
+                    const type = manager.getType();
+                    if (type && type !== "empty") {
+                        validFluids.push({ manager, type });
+                    }
+                });
+
+                if (validFluids.length === 0) {
+                    player.onScreenDisplay.setActionBar(`§cNo fluids found in source.`);
+                    return;
+                }
+
+                // ──────────────────────────────────────────────
+                // Build modal form
+                // ──────────────────────────────────────────────
+                const form = new ModalFormData()
+                    .title("Select Fluids");
+
+                validFluids.forEach(({ type }) => {
+                    form.toggle(
+                        DoriosAPI.utils.formatIdToText(type),
+                        { defaultValue: entity.hasTag(type) }
+                    );
+                });
+
+                form.show(player).then(res => {
+                    if (res.canceled) return;
+
+                    res.formValues.forEach((enabled, idx) => {
+                        if (enabled) {
+                            entity.addTag(validFluids[idx].type);
+                        } else {
+                            entity.removeTag(validFluids[idx].type);
+                        }
+                    });
+
+                    player.onScreenDisplay.setActionBar(
+                        `§aAdded ${res.formValues.filter(Boolean).length} fluid filter(s).`
+                    );
+                });
+
+                return;
+            }
+
+            case 5: // Transfer Mode
+                openRemoveTypeMenu(block, player, entity, acceptedFluids);
+                break;
+
+        }
+    });
+}
+
+function showFilteredFluids(player, items) {
+    const form = new ActionFormData();
+    form.title("Filtered Items");
+
+    const header = "§aWhitelist§r\nOnly these fluids types are allowed.\n"
+
+    const list =
+        items.length === 0
+            ? "§7(empty)"
+            : items.map(i => '- ' + DoriosAPI.utils.formatIdToText(i)).join("\n");
+
+    form.body(header + "\n" + list);
+    form.button("Close");
+
+    form.show(player);
+}
+
+/**
+ * Opens a submenu to remove types from the extractor filter.
+ *
+ * @param {Block} block The extractor block.
+ * @param {Player} player The player.
+ * @param {Entity} entity The extractor entity.
+ * @param {string[]} types List of filterable tags.
+ */
+function openRemoveTypeMenu(block, player, entity, types) {
+    if (!types || types.length === 0) {
+        player.onScreenDisplay.setActionBar('§cNo fluid types to remove.');
+        return;
+    }
+
+    const menu = new ActionFormData()
+        .title('Remove Fluid Type')
+        .body('§7Select a fluid type to remove from the filter.');
+
+    for (const tag of types) {
+        menu.button(DoriosAPI.utils.formatIdToText(tag));
+    }
+
+    menu.show(player).then(result => {
+        const selection = result.selection;
+        if (selection === undefined) {
+            openFluidExtractorMenu(block, player);
+            return;
+        }
+
+        const tagToRemove = types[selection];
+        entity.removeTag(tagToRemove);
+        player.onScreenDisplay.setActionBar(`§cRemoved: §r${tagToRemove}`);
+
+        openFluidExtractorMenu(block, player);
+    });
+}
+
+
+/**
+ * UtilityCraft - Fluid Extractor
+ * Pulls fluid from the attached container or block (including vanilla fluids and UtilityCraft sources)
+ * and exports it to its cached fluid network.
+ * 
+ * Supported sources:
+ * - Dorios/UtilityCraft fluid containers (entities)
+ * - Vanilla fluids (minecraft:water, minecraft:lava)
+ * - UtilityCraft:crucible (lava)
+ * - UtilityCraft:sink (infinite water)
+ *
+ * Network cache key: dorios:fluid_nodes (JSON array of {x,y,z})
+ * Mode key: transferMode → "nearest" | "farthest" | "round"
+ * Round index key: dorios:fluid_round_idx (number)
+ */
+DoriosAPI.register.blockComponent('fluid_extractor', {
+    beforeOnPlayerPlace(e) {
+        const { block } = e;
+        let { x, y, z } = block.location;
+        y += 0.375; x += 0.5; z += 0.5;
+        system.run(() => {
+            const entity = block.dimension.spawnEntity('utilitycraft:pipe', { x, y, z });
+            entity.setDynamicProperty('transferMode', 'nearest');
+            entity.setDynamicProperty('dorios:fluid_round_idx', 0);
+        });
+    },
+
+    onPlayerBreak(e) {
+        const ent = e.block.dimension.getEntitiesAtBlockLocation(e.block.location)[0];
+        if (ent) ent.remove();
+    },
+
+    onPlayerInteract(e) {
+        const { block, player } = e
+        if (player.isSneaking) return
+
+        const mainHand = player.getComponent('equippable')?.getEquipment('Mainhand')
+        if (mainHand?.typeId?.includes('upgrade')) return
+
+        openFluidExtractorMenu(block, player) // tu menú existente si lo deseas reutilizar
+    },
+
+    onTick({ block, dimension }) {
+        if (!globalThis.worldLoaded) return;
+
+        // ─────────────────────────────
+        // 1. Get main extractor entity
+        // ─────────────────────────────
+        const extractor = dimension.getEntitiesAtBlockLocation(block.location)[0];
+        if (!extractor) return;
+        if (extractor.getDynamicProperty('isOff')) return;
+        const hasFilter = block.permutation.getState('utilitycraft:filter')
+        // ─────────────────────────────
+        // 2. Locate source block
+        // ─────────────────────────────
+        const face = block.permutation.getState('minecraft:block_face');
+        const off = blockFaceOffsets[face] || [0, -1, 0];
+        const sourceLoc = {
+            x: block.location.x + off[0],
+            y: block.location.y + off[1],
+            z: block.location.z + off[2],
+        };
+
+        const sourceBlock = dimension.getBlock(sourceLoc);
+        if (!sourceBlock) return;
+
+        let sourceEntity = dimension
+            .getEntitiesAtBlockLocation(sourceLoc)
+            .find(e => e.getComponent("minecraft:type_family")?.hasTypeFamily("dorios:fluid_container"));
+
+        if (!sourceEntity && sourceBlock.hasTag("dorios:multiblock.port") && sourceBlock.hasTag("dorios:fluid")) {
+            const pos = sourceBlock.location
+            sourceEntity = dimension.getEntities({ tags: [`input:[${pos.x},${pos.y},${pos.z}]`] })[0];
+            if (!sourceEntity) return;
+        }
+
+        let fluidSource = null;
+        let liquidType = null;
+        let amount = 0;
+        let infinite = false;
+
+        // ─────────────────────────────
+        // 3. Detect fluid source type
+        // ─────────────────────────────
+        const liquids = {
+            'minecraft:water': 'water',
+            'minecraft:lava': 'lava',
+        };
+        if (sourceEntity) {
+            // Dorios/UtilityCraft entity fluid container
+            const fluidQty = FluidStorage.getMaxLiquids(sourceEntity)
+            const fluidTypes = FluidStorage.initializeMultiple(sourceEntity, fluidQty)
+            if (!fluidTypes) return
+            fluidSource = fluidTypes.find(type => {
+                if (type.get() <= 0 || type.type == "empty") return false
+                if (hasFilter && !extractor.hasTag(type.type)) return false
+                return true
+            })
+            if (!fluidSource) return
+            liquidType = fluidSource.getType();
+            amount = fluidSource.get();
+        } else if (liquids[sourceBlock.typeId]) {
+            // Vanilla fluids (water/lava)
+            if (sourceBlock.permutation.getState('liquid_depth') !== 0) return; // only full blocks
+            liquidType = liquids[sourceBlock.typeId];
+            amount = 1000;
+        } else if (sourceBlock.typeId === 'utilitycraft:crucible') {
+            // Crucible lava
+            const lavaLevel = sourceBlock.permutation.getState('utilitycraft:lava');
+            if (lavaLevel < 1) return;
+            liquidType = 'lava';
+            amount = 250 * lavaLevel;
+        } else if (sourceBlock.typeId === 'utilitycraft:sink') {
+            // Sink (infinite water)
+            liquidType = 'water';
+            amount = Infinity;
+            infinite = true;
+        } else if (sourceBlock.hasTag('dorios:fluid')) {
+            // Dorios fluid block (tank, machine, or generator)
+            // If there's no entity → it's empty or inactive
+            return;
+        } else {
+            return; // Not a valid fluid source
+        }
+
+        if (!liquidType || amount <= 0) return;
+
+        // ─────────────────────────────
+        // 4. Load cached fluid network
+        // ─────────────────────────────
+        let cached = extractor.getDynamicProperty('dorios:fluid_nodes');
+        const needsUpdate = extractor.hasTag('updateNetwork');
+
+        if (!cached || needsUpdate) {
+            const pos = extractor.location;
+            const positions = extractor.getTags()
+                .filter(t => t.startsWith('ent:[') || t.startsWith('tan:['))
+                .map(tag => {
+                    const [x, y, z] = tag.slice(5, -1).split(',').map(Number);
+                    return { x, y, z };
+                })
+                .sort((a, b) =>
+                    DoriosAPI.math.distanceBetween(pos, a) -
+                    DoriosAPI.math.distanceBetween(pos, b)
+                );
+            extractor.setDynamicProperty('dorios:fluid_nodes', JSON.stringify(positions));
+            extractor.removeTag('updateNetwork');
+            cached = JSON.stringify(positions);
+        }
+
+        /** @type {{x:number,y:number,z:number}[]} */
+        const nodes = JSON.parse(cached || '[]');
+        if (nodes.length === 0) return;
+
+        // ─────────────────────────────
+        // 5. Select mode
+        // ─────────────────────────────
+        const mode = extractor.getDynamicProperty('transferMode') || 'nearest';
+
+        let orderedTargets = [...nodes];
+        if (mode === 'farthest') {
+            orderedTargets.reverse();
+        } else if (mode === 'round') {
+            const idx = Number(extractor.getDynamicProperty('dorios:fluid_round_idx') || 0) % orderedTargets.length;
+            orderedTargets = orderedTargets.slice(idx).concat(orderedTargets.slice(0, idx));
+        }
+
+        // ─────────────────────────────
+        // 6. Perform fluid transfer
+        // ─────────────────────────────
+        let speed = 4000
+        let transferred = 0;
+
+        if (fluidSource) {
+            transferred = fluidSource.transferToNetwork(speed, mode, orderedTargets);
+            // if (liquidType == "saline_coolant") world.sendMessage(`${transferred}`)
+        } else {
+            // For non-entity sources (vanilla/crucible/sink)
+            for (const loc of orderedTargets) {
+                const targetBlock = dimension.getBlock(loc);
+                if (!targetBlock?.hasTag('dorios:fluid')) continue;
+
+                // Create tank entity if block is an empty tank
+                let targetEntity = dimension.getEntitiesAtBlockLocation(loc)[0];
+                if (!targetEntity && targetBlock.typeId.includes('fluid_tank')) {
+                    FluidStorage.addfluidToTank(targetBlock, liquidType, 0);
+                    targetEntity = dimension.getEntitiesAtBlockLocation(loc)[0];
+                }
+                if (!targetEntity) continue;
+
+                const targetFluid = FluidStorage.findType(targetEntity, liquidType);
+                // Skip incompatible fluids
+                if (!targetFluid) continue;
+
+                const space = targetFluid.getFreeSpace();
+                if (space <= 0) continue;
+
+                // Assign fluid type if empty
+                if (targetFluid.type === 'empty') targetFluid.setType(liquidType);
+
+                let move = Math.min(space, speed, amount);
+
+                if (sourceBlock.typeId === 'utilitycraft:crucible') {
+                    move = Math.floor(move / 250) * 250;
+                    if (move <= 0) continue;
+                }
+
+                const added = targetFluid.add(move);
+                if (added > 0) {
+                    transferred += added;
+                    amount -= added;
+                    speed -= added;
+
+                    // End if source is fully drained or transfer cap reached
+                    if (amount <= 0 || speed <= 0) break;
+                }
+            }
+        }
+
+
+        // ─────────────────────────────
+        // 7. Update source if finite
+        // ─────────────────────────────
+        if (transferred > 0 && !infinite) {
+            if (fluidSource) {
+            } else if (liquids[sourceBlock.typeId]) {
+                // remove vanilla fluid
+                sourceBlock.setType('minecraft:air');
+            } else if (sourceBlock.typeId === 'utilitycraft:crucible') {
+                // drain crucible in 250mB levels based on actual transferred amount
+                const currentLava = sourceBlock.permutation.getState('utilitycraft:lava');
+                const drainedLevels = Math.min(currentLava, Math.floor(transferred / 250));
+                const remainingLava = Math.max(0, currentLava - drainedLevels);
+                sourceBlock.setPermutation(sourceBlock.permutation.withState('utilitycraft:lava', remainingLava));
+            }
+        }
+
+        // ─────────────────────────────
+        // 8. Update round mode index
+        // ─────────────────────────────
+        if (transferred > 0 && mode === 'round') {
+            let idx = Number(extractor.getDynamicProperty('dorios:fluid_round_idx') || 0);
+            extractor.setDynamicProperty('dorios:fluid_round_idx', (idx + 1) % nodes.length);
+        }
+    },
+});
+
+/**
+ * Rebuilds a fluid pipe network using BFS.
+ *
+ * Traverses all connected fluid pipes and fluid extractors starting from the given position.
+ * Supports color-based networks using tags:
+ * - "dorios:color.default" → treated as its own independent color
+ * - "dorios:color:<X>" → connects only with blocks/entities that share the same color tag
+ *
+ * Collects valid fluid container targets and assigns their location tags ("tan:[x,y,z]", "ent:[x,y,z]")
+ * to each extractor. Containers are not color-filtered. Extractors block the container in front
+ * of their facing direction to prevent feedback loops.
+ *
+ * @param {{x:number, y:number, z:number}} startPos Starting position of the scan.
+ * @param {import('@minecraft/server').Dimension} dimension Dimension where the scan occurs.
+ */
 function startRescanFluid(startPos, dimension) {
     const queue = [startPos];
     const visited = new Set();
     const inputs = [];
     const extractors = [];
-    let cablesUsed = 0
+    let cablesUsed = 0;
+
+    const initialBlock = dimension.getBlock(startPos);
+
+    let networkColorTag = "dorios:color.default";
+    if (initialBlock?.getTags) {
+        for (const t of initialBlock.getTags()) {
+            if (t.startsWith("dorios:color.")) {
+                networkColorTag = t;
+                break;
+            }
+        }
+    }
 
     const globalBlockedTags = new Set();
 
@@ -507,37 +1737,48 @@ function startRescanFluid(startPos, dimension) {
         visited.add(key);
 
         const block = dimension.getBlock(pos);
+        if (!block) continue;
 
-        if (block?.typeId === "utilitycraft:fluid_pipe" || block?.typeId === "utilitycraft:fluid_extractor") {
-            cablesUsed += 1
+        if (
+            block.typeId.includes("utilitycraft:fluid_pipe") ||
+            block.typeId.includes("utilitycraft:fluid_extractor")
+        ) {
+            if (!block.hasTag(networkColorTag)) continue;
+
+            cablesUsed++;
+
             for (const offset of offsets) {
                 queue.push({
                     x: pos.x + offset.x,
                     y: pos.y + offset.y,
-                    z: pos.z + offset.z,
+                    z: pos.z + offset.z
                 });
             }
+
+            let ent = dimension.getEntitiesAtBlockLocation(pos)[0];
+            if (ent && ent.typeId === "utilitycraft:pipe") {
+                extractors.push(ent);
+            }
+
+            continue;
         }
 
-        if (block?.typeId.includes('fluid_tank')) {
-            inputs.push(`ent:[${pos.x},${pos.y},${pos.z}]`);
+        if (block.typeId.includes("fluid_tank")) {
+            inputs.push(`tan:[${pos.x},${pos.y},${pos.z}]`);
             continue;
         }
 
         let entity = dimension.getEntitiesAtBlockLocation(pos)[0];
-        if (block.hasTag('dorios:port') && block.hasTag('dorios:fluid')) {
-            entity = dimension.getEntities({ tags: [`input:[${pos.x},${pos.y},${pos.z}]`] })[0]
-            if (!entity) continue
-            const loc = entity.location
-            inputs.push(`ent:[${loc.x},${loc.y},${loc.z}]`);
-            continue
-        }
-        if (entity) {
-            if (entity.typeId === "utilitycraft:pipe") {
-                extractors.push(entity);
-                continue;
-            }
 
+        if (block.hasTag("dorios:multiblock.port") && block.hasTag("dorios:fluid")) {
+            entity = dimension.getEntities({ tags: [`input:[${pos.x},${pos.y},${pos.z}]`] })[0];
+            if (!entity) continue;
+            const loc = entity.location;
+            inputs.push(`ent:[${loc.x},${loc.y},${loc.z}]`);
+            continue;
+        }
+
+        if (entity) {
             const tf = entity.getComponent("minecraft:type_family");
             if (tf?.hasTypeFamily("dorios:fluid_container")) {
                 inputs.push(`ent:[${pos.x},${pos.y},${pos.z}]`);
@@ -545,8 +1786,8 @@ function startRescanFluid(startPos, dimension) {
         }
     }
 
-    if (cablesUsed <= 0) return
-    // Taggear inputs válidos a cada extractor, excluyendo la cara hacia la que está orientado
+    if (cablesUsed <= 0) return;
+
     for (const ext of extractors) {
         const extLoc = ext.location;
         const extPos = {
@@ -557,32 +1798,43 @@ function startRescanFluid(startPos, dimension) {
 
         const block = dimension.getBlock(extPos);
         const face = block.permutation.getState("minecraft:block_face");
-        const faceOffset = blockFaceOffsets[face];
+        const off = blockFaceOffsets[face];
 
-        if (faceOffset) {
-            const bx = extPos.x + faceOffset[0];
-            const by = extPos.y + faceOffset[1];
-            const bz = extPos.z + faceOffset[2];
+        if (off) {
+            const bx = extPos.x + off[0];
+            const by = extPos.y + off[1];
+            const bz = extPos.z + off[2];
+            const offBlock = dimension.getBlock({ x: bx, y: by, z: bz })
+            if (offBlock && offBlock.hasTag("dorios:multiblock.port") && offBlock.hasTag("dorios:fluid")) {
+                let entity = dimension.getEntities({ tags: [`input:[${bx},${by},${bz}]`] })[0];
+                if (entity) {
+                    const loc = entity.location;
+                    globalBlockedTags.add(`ent:[${loc.x},${loc.y},${loc.z}]`);
+                }
+            }
             globalBlockedTags.add(`tan:[${bx},${by},${bz}]`);
             globalBlockedTags.add(`ent:[${bx},${by},${bz}]`);
         }
     }
 
     for (const ext of extractors) {
-        const oldTags = ext.getTags().filter(tag => tag.startsWith("tan:") || tag.startsWith("ent:"));
+        const oldTags = ext.getTags().filter(tag =>
+            tag.startsWith("tan:") ||
+            tag.startsWith("ent:")
+        );
         for (const tag of oldTags) ext.removeTag(tag);
 
         for (const tag of inputs) {
-            if (globalBlockedTags.has(tag)) continue;
-            ext.addTag(tag);
+            if (!globalBlockedTags.has(tag)) {
+                ext.addTag(tag);
+
+            }
         }
-        ext.addTag('updateNetwork')
+
+        ext.addTag("updateNetwork");
     }
-    // Log network creation
-    // const isNetwork = cablesUsed > 0 && extractors.length > 0
-    // if (isNetwork) console.warn(`[Fluid Network] Created a network with ${extractors.length} Extractor(s) and ${inputs.length} Fluid Container(s).`);
-    // return visited
 }
+
 
 //#endregion
 
@@ -636,4 +1888,66 @@ world.afterEvents.playerPlaceBlock.subscribe(e => {
     if (block.hasTag('dorios:fluid')) {
         updatePipes(block, 'fluid');
     }
+});
+
+/**
+ * Converts piston facing direction to a vector.
+ *
+ * @param {number} dir
+ * @returns {{x:number,y:number,z:number}}
+ */
+function getDirectionVector(dir) {
+    switch (dir) {
+        case 0: return { x: 0, y: -1, z: 0 }; // down
+        case 1: return { x: 0, y: 1, z: 0 };  // up
+        case 2: return { x: 0, y: 0, z: -1 }; // north
+        case 3: return { x: 0, y: 0, z: 1 };  // south
+        case 4: return { x: -1, y: 0, z: 0 }; // west
+        case 5: return { x: 1, y: 0, z: 0 };  // east
+        default: return { x: 0, y: 0, z: 0 };
+    }
+}
+
+world.afterEvents.pistonActivate.subscribe(e => {
+    const { piston, isExpanding, dimension } = e;
+
+    // Locations affected (works even when getAttachedBlocks() is bugged)
+    const locations = piston.getAttachedBlocksLocations();
+    if (!locations || locations.length === 0) return;
+
+    // Facing direction -> vector
+    const facing = piston.block.permutation.getState("facing_direction");
+    const dirVec = getDirectionVector(facing);
+
+    // Expand: blocks move +dirVec
+    // Retract (sticky): blocks move -dirVec
+    const step = isExpanding ? -1 : 1;
+    system.runTimeout(() => {
+        for (const pos of locations) {
+            const block = dimension.getBlock(pos)
+            // world.sendMessage(`${block.typeId}`)
+            const nextBlockPos = DoriosAPI.utils.offsetPos(pos, dirVec, step);
+            // const nextBlock = block.offset(dirVec)
+            const nextBlock = dimension.getBlock(nextBlockPos)
+            // world.sendMessage(`${nextBlock.typeId}`)
+            if (block.hasTag('dorios:energy') || nextBlock.hasTag('dorios:energy')) {
+                updatePipes(block, 'energy');
+                updatePipes(nextBlock, 'energy');
+            }
+
+            if (
+                block.hasTag('dorios:item') || nextBlock.hasTag('dorios:item') ||
+                DoriosAPI.constants.vanillaContainers.includes(block.typeId) || DoriosAPI.constants.vanillaContainers.includes(nextBlock.typeId)
+            ) {
+                updatePipes(block, 'item');
+                updatePipes(nextBlock, 'item');
+            }
+
+            if (block.hasTag('dorios:fluid') || nextBlock.hasTag('dorios:fluid')) {
+                updatePipes(block, 'fluid');
+                updatePipes(nextBlock, 'fluid');
+            }
+        }
+    }, 2)
+
 });
