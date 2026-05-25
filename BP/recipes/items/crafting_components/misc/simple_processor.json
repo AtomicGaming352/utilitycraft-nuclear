@@ -1,0 +1,37 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "neoutility:simple_processor"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "NVN",
+            "VPV",
+            "NVN"
+        ],
+        "key": {
+            "V": {
+                "item": "neoutility:vanadium_plate"
+            },
+            "P": {
+                "item": "neoutility:processor"
+            },
+            "N": {
+                "item": "gold_nugget"
+            }
+        },
+        "result": {
+            "item": "neoutility:simple_processor",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "neoutility:processor"
+            }
+        ]
+    }
+}
+
