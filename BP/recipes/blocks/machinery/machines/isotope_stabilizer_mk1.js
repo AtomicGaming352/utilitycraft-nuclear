@@ -19,14 +19,14 @@
             "L": {
                 "item": "utilitycraft:ryno_lead_plating"
             },
-            "D": {
+            "P": {
                 "item": "neoutility:stabilizer"
             },
             "M": {
-                "item": "utilitycraft:machine_case"
+                "item": "neoutility:lead_machine_case"
             },
-            "P": {
-                "item": "utilitycraft:expert_chip"
+            "D": {
+                "item": "neoutility:simple_processor"
           }
         },
         "result": {
