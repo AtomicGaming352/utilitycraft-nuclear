@@ -57,6 +57,8 @@ export const addonData = {
             name: "UtilityCraft",  // Custom name to display
             warning: "Please update to the latest version."  // Custom warning message
                 }
+    }
+};
 
 /**
  * Module Imports
