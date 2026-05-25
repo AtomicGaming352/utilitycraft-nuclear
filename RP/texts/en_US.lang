@@ -19,6 +19,7 @@ tile.utilitycraft:ryno_freezer.name=Item Freezer [§bMK I§r]\n§7- Accepted upg
 entity.utilitycraft:ryno_reactor.name=Reactor
 entity.utilitycraft:ryno_energizer.name=Energizer
 entity.utilitycraft:ryno_freezer.name=Item Freezer
+entity.utilitycraft:crusher_dual.name=Dual Crusher
 
 ## Items
 item.utilitycraft:ryno_raw_lead=Raw Lead §9 \n   @Nuclear Engineering
