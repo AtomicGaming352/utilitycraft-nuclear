@@ -2,7 +2,7 @@
     "format_version": "1.20.80",
     "minecraft:recipe_shaped": {
         "description": {
-            "identifier": "neoutility:isotope_stabilizer_mk1"
+            "identifier": "neoutility:processor"
         },
         "tags": [
             "utilitycraft_workbench"
@@ -14,23 +14,17 @@
         ],
         "key": {
             "R": {
-                "item": "utilitycraft:ryno_cooling_unit"
+                "item": "redstone"
             },
             "L": {
-                "item": "utilitycraft:ryno_lead_plating"
+                "item": "utilitycraft:ryno_lead_plate"
             },
-            "P": {
-                "item": "neoutility:stabilizer"
-            },
-            "M": {
-                "item": "neoutility:lead_machine_case"
-            },
-            "D": {
-                "item": "neoutility:simple_processor"
-          }
+            "N": {
+                "item": "gold_nugget"
+            }
         },
         "result": {
-            "item": "neoutility:isotope_stabilizer_mk1",
+            "item": "neoutility:processor",
             "count": 1
         },
         "unlock": [
