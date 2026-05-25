@@ -68,6 +68,16 @@
 					"output": "minecraft:breeze_rod",
 					"amount": 1,
 					"cost": 7200
+				},
+				"minecraft:lava_bucket": {
+					"output": "minecraft:obsidian",
+					"amount": 1
+				},
+				"utilitycraft:lava_ball": {
+					"output": "minecraft:obsidian",
+					"amount": 1,
+					"required": 2,
+					"cost": 6400
 				}
 			},
 			"minecraft:geometry": "geometry.utilitycraft_block_2",
