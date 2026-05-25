@@ -56,11 +56,18 @@
 				},
 				"utilitycraft:water_ball": {
 					"output": "minecraft:ice",
-					"amount": 1
+					"amount": 1,
+					"required": 2,
+					"cost": 6400
 				},
 				"utilitycraft:blank_upgrade": {
 					"output": "utilitycraft:energy_upgrade:",
 					"amount": 1
+				},
+				"minecraft:blaze_rod": {
+					"output": "minecraft:breeze_rod",
+					"amount": 1,
+					"cost": 7200
 				}
 			},
 			"minecraft:geometry": "geometry.utilitycraft_block_2",
