@@ -1,0 +1,42 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "neoutility:lead_machine_case"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "LDL",
+            "VMV",
+            "LDL"
+        ],
+        "key": {
+            "L": {
+                "item": "utilitycraft:ryno_lead_plating"
+            },
+            "P": {
+                "item": "utilitycraft:ryno_vanadium_ingot"
+            },
+            "M": {
+                "item": "utilitycraft:machine_case"
+            },
+            "D": {
+                "item": "neoutility:processor"
+          }
+        },
+        "result": {
+            "item": "neoutility:lead_machine_case",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:machine_case"
+            },
+            {
+                "item": "utilitycraft:ryno_lead_plating"
+            }
+        ]
+    }
+}
