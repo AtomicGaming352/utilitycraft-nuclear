@@ -1,4 +1,5 @@
 import "./recipes/reactor.js"
 import "./recipes/crusher.js"
 import "./recipes/dual_crusher.js"
+import "./recipes/de_furnator.js"
 import "./rad/main.js"
