@@ -1,60 +1,47 @@
-import { world, system } from "@minecraft/server";
+import { world, system, EquipmentSlot } from "@minecraft/server";
 const RAD_OBJECTIVE_ID = "rad";
-const itemRadiation = new Map([
-    ["utilitycraft:ryno_refined_uranium", 15],
-    ["utilitycraft:ryno_refined_uranium_nugget", 5],
-    ["utilitycraft:ryno_plutonium_ingot", 45],
-    ["utilitycraft:ryno_plutonium_chunk", 15]
+const ITEM_RADIATION = new Map([
+  ["utilitycraft:ryno_refined_uranium", 10],
+  ["utilitycraft:ryno_refined_uranium_nugget", 2],
+  ["utilitycraft:ryno_plutonium_ingot", 45],
+  ["utilitycraft:ryno_plutonium_bit", 15],
+  ["minecraft:iron_ingot", 1],
+  ["minecraft:raw_iron", 1]
 ]);
-const tierCaps = [
-    { ids: ["utilitycraft:ryno_refined_uranium", "utilitycraft:ryno_refined_uranium_nugget"], cap: 256 },
-    { ids: ["utilitycraft:ryno_plutonium_ingot", "utilitycraft:ryno_plutonium_chunk"], cap: 512 }
-];
 function getOrCreateObjective(id, displayName) {
-    let objective = world.scoreboard.getObjective(id);
-    if (!objective) objective = world.scoreboard.addObjective(id, displayName);
-    return objective;
+  let objective = world.scoreboard.getObjective(id);
+  if (!objective) objective = world.scoreboard.addObjective(id, displayName);
+  return objective;
 }
-function getScore(objective, player) {
-    try {
-        return objective.getScore(player) ?? 0;
-    } catch {
-        return 0;
-    }
+function setScore(objective, player, value) {
+  try { objective.setScore(player, Math.max(0, Math.floor(value))); return true; } 
+  catch { return false; }
 }
 system.runInterval(() => {
-    const radObjective = getOrCreateObjective(RAD_OBJECTIVE_ID, "Radiation");
-    for (const player of world.getAllPlayers()) {
-        const inventory = player.getComponent("minecraft:inventory")?.container;
-        if (!inventory) continue;
-        let totalRadiation = 0;
-        const currentRad = getScore(radObjective, player);
-        for (let i = 0; i < inventory.size; i++) {
-            const item = inventory.getItem(i);
-            if (!item) continue;
-            const value = itemRadiation.get(item.typeId);
-            if (!value) continue;
-            totalRadiation += value * item.amount;
+  const radObjective = getOrCreateObjective(RAD_OBJECTIVE_ID, "Radiation");
+  for (const player of world.getAllPlayers()) {
+    const inventory = player.getComponent("minecraft:inventory")?.container;
+    const equipment = player.getComponent("minecraft:equippable");
+    if (!inventory) continue;
+    let totalRadiation = 0;
+    for (let i = 0; i < inventory.size; i++) {
+      const item = inventory.getItem(i);
+      if (!item) continue;
+      const value = ITEM_RADIATION.get(item.typeId);
+      if (value) totalRadiation += value * item.amount;
+    }
+    if (equipment) {
+        const mainhand = equipment.getEquipment(EquipmentSlot.Mainhand);
+        const offhand = equipment.getEquipment(EquipmentSlot.Offhand);
+        if (mainhand && ITEM_RADIATION.has(mainhand.typeId)) {
+            totalRadiation += (ITEM_RADIATION.get(mainhand.typeId) * mainhand.amount);
         }
-        if (totalRadiation <= 0) continue;
-        let allowed = totalRadiation;
-        for (const tier of tierCaps) {
-            const hasTierItem = tier.ids.some((id) => {
-                for (let i = 0; i < inventory.size; i++) {
-                    const item = inventory.getItem(i);
-                    if (item?.typeId === id) return true;
-                }
-                return false;
-            });
-            if (hasTierItem && currentRad >= tier.cap) {
-                allowed = 0;
-                break;
-            }
-        }
-        if (allowed > 0) {
-            try {
-                radObjective.setScore(player, currentRad + allowed);
-            } catch {}
+        if (offhand && ITEM_RADIATION.has(offhand.typeId)) {
+            totalRadiation += (ITEM_RADIATION.get(offhand.typeId) * offhand.amount);
         }
     }
-}, 20);
+    if (totalRadiation <= 0) continue;
+    const currentRad = radObjective.getScore(player) ?? 0;
+    setScore(radObjective, player, currentRad + totalRadiation);
+  }
+}, 200);
