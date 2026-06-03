@@ -2,7 +2,7 @@ export const coolantValues = Object.freeze({
   'minecraft:ice': 400,
   'minecraft:packed_ice': 800,
   'minecraft:blue_ice': 2400,
-  'minecraft:snow_block': 200,
+  'utilitycraft:ryno_coolant_cell': 250000,
   'minecraft:snowball': 50,
 });
 export const validCoolants = new Set(Object.keys(coolantValues));
@@ -11,25 +11,25 @@ export function getCoolantValue(typeId) {
 }
 export const deFurnatorRecipes = [
   {
-    input: 'minecraft:coal_block',
-    de: 8000,
-    byproduct: 'minecraft:coal',
+    input: 'utilitycraft:ryno_nuclear_fuel',
+    de: 2000000,
+    byproduct: 'neoutility:neptunium_nugget',
     byproduct_amount: 1,
-    byproduct_range: [1, 1],
+    byproduct_range: [1, 3],
   },
   {
-    input: 'minecraft:dried_kelp_block',
-    de: 400,
-    byproduct: 'minecraft:dry_kelp',
+    input: 'utilitycraft:ryno_refined_uranium',
+    de: 160000,
+    byproduct: 'neoutility:neptunium_bit',
     byproduct_amount: 1,
     byproduct_range: [0, 1],
   },
   {
-    input: 'minecraft:coal',
-    de: 1000,
-    byproduct: 'minecraft:charcoal',
+    input: 'neoutility:fissiled_neptunium',
+    de: 100000,
+    byproduct: 'neoutility:plutonium_bit',
     byproduct_amount: 1,
-    byproduct_range: [1, 1],
+    byproduct_range: [0, 1],
   },
   {
     input: 'minecraft:charcoal',
