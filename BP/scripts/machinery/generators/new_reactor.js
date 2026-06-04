@@ -1,8 +1,8 @@
 import { Generator } from "../../DoriosCore/machinery/index.js";
 import { ItemStack } from '@minecraft/server';
 import {
-  deFurnatorRecipes,
-  deFurnatorRecipeIndex,
+  newReactorRecipes,
+  newReactorRecipeIndex,
   validCoolants,
   getCoolantValue,
 } from '../../config/recipes/de_furnator.js';
