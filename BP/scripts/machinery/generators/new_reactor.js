@@ -244,7 +244,7 @@ function finishCycle(generator, entity, container, recipe) {
 function setLabelSafe(generator, text) {
   generator.setLabel(String(text ?? '').slice(0, 240), LABEL_SLOT);
 }
-DoriosAPI.register.blockComponent('de_furnator', {
+DoriosAPI.register.blockComponent('new_reactor', {
   beforeOnPlayerPlace(e, { params: settings }) {
     Generator.spawnEntity(e, settings, (entity) => {
       clearAllState(entity);
