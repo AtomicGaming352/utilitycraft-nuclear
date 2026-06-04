@@ -2,6 +2,6 @@
     "ui_defs": [
         "ui/reactor.json",
         "ui/simple_machine.json",
-        "ui/dual.json"
+        "ui/crusher_dual.json"
     ]
 }

@@ -42,7 +42,7 @@
         "value": [
           {
             "requires": "($temp_container_title = 'entity.utilitycraft:crusher_dual.name')",
-            "$screen_content": "dual.utility_panel",
+            "$screen_content": "crusher_dual.utility_panel",
             "$screen_bg_content": "common.screen_background"
           }
         ]
