@@ -38,6 +38,6 @@ export const newReactorRecipes = [
     byproduct_range: [1, 2],
   },
 ];
-export const deFurnatorRecipeIndex = Object.fromEntries(
+export const newReactorRecipeIndex = Object.fromEntries(
   newReactorRecipes.map((recipe, index) => [recipe.input, index])
 );
