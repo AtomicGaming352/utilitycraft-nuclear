@@ -121,6 +121,18 @@
 		},
 		"utilitycraft_ryno_geiger": {
 			"textures": "textures/items/tools/geiger_counter"
+		},
+		"utilitycraft_ryno_hazmat_mask": {
+			"textures": "textures/items/models/armour/hazmat_helmet"
+		},
+		"utilitycraft_ryno_hazmat_suit": {
+			"textures": "textures/items/models/armour/hazmat_chestplate"
+		},
+		"utilitycraft_ryno_hazmat_trousers": {
+			"textures": "textures/items/models/armour/hazmat_pants"
+		},
+		"utilitycraft_ryno_hazmat_boots": {
+			"textures": "textures/items/models/armour/hazmat_boots"
 		}
 	}
 }
