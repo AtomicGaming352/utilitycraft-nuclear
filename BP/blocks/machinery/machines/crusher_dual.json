@@ -62,6 +62,16 @@
           "secondary_chance": 0.5,
           "cost": 800,
           "tier": 0
+        },
+        "utilitycraft:ryno_lead_ingot": {
+          "output": "utilitycraft:ryno_refined_uranium",
+          "amount": 1,
+          "primary_chance": 0.85,
+          "secondary_output": "utilitycraft:ryno_refined_uranium_nugget",
+          "secondary_amount": 2,
+          "secondary_chance": 0.5,
+          "cost": 800,
+          "tier": 0
         }
       },
       "minecraft:geometry": "geometry.utilitycraft_block_2",
