@@ -22,7 +22,7 @@
       }
     },
     "components": {
-      "utilitycraft:de_furnator": {
+      "utilitycraft:new_reactor": {
         "entity": {
           "name": "de_furnator",
           "type": "generator",
