@@ -119,7 +119,7 @@ function makeBar(current, total, width = 8) {
 function setBarItem(entity, slot, current, total) {
   const safeTotal = Math.max(1, Math.floor(total || 0));
   const safeCurrent = Math.max(0, Math.min(safeTotal, Math.floor(current || 0)));
-  const frame = Math.max(0, Math.min(16, Math.round((safeCurrent / safeTotal) * 16)));
+  const frame = Math.max(0, Math.min(13, Math.round((safeCurrent / safeTotal) * 13)));
   entity.setItem(slot, `utilitycraft:fuel_bar_${frame}`, 1, ' ');
 }
 function setProgressBar(entity, remaining, total) {
