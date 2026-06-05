@@ -175,9 +175,9 @@ function setWaitingDisplay(generator, title, subtitle, remainingFuel, totalFuel,
   generator.displayEnergy(ENERGY_SLOT);
 }
 function findRecipe(typeId) {
-  const index = deFurnatorRecipeIndex[typeId];
+  const index = newReactorRecipeIndex[typeId];
   if (typeof index !== 'number' || index < 0) return null;
-  return { recipe: deFurnatorRecipes[index], index };
+  return { recipe: newReactorRecipes[index], index };
 }
 function getRecipeOutput(recipe) {
   const output = typeof recipe?.byproduct === 'string' ? recipe.byproduct : '';
@@ -266,7 +266,7 @@ DoriosAPI.register.blockComponent('new_reactor', {
     const outputStack = getStack(container, OUTPUT_SLOT);
     const pending = Number(entity.getDynamicProperty(PENDING_PROP) ?? 0);
     const recipeIndex = Number(entity.getDynamicProperty(RECIPE_INDEX_PROP) ?? -1);
-    const recipe = recipeIndex >= 0 ? deFurnatorRecipes[recipeIndex] : null;
+    const recipe = recipeIndex >= 0 ? newReactorRecipes[recipeIndex] : null;
     const resolvedOutput = getRecipeOutput(recipe);
     if (outputStack && resolvedOutput && outputStack.typeId !== resolvedOutput.output) {
       block.dimension.spawnItem(outputStack, block.center());
