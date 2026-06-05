@@ -1,8 +1,8 @@
 import { world, system, ItemStack } from "@minecraft/server";
 const RAD_SCOREBOARD = "rad";
-const CLOSED_CORE_PROJECTILE = "neoutility:demon_core_closed_projectile";
-const OPEN_CORE_ID = "neoutility:demon_core_open";
-const CLOSED_CORE_ID = "neoutility:demon_core_closed";
+const CLOSED_CORE_PROJECTILE = "utilitycraft:ryno_demon_core_closed_projectile";
+const OPEN_CORE_ID = "utilitycraft:crown_demon_core_open";
+const CLOSED_CORE_ID = "utilitycraft:crown_demon_core_closed";
 const FLASK_RAD_REDUCTION = {
     "neoutility:lesser_purifying_flask": 50,
     "neoutility:purifying_flask": 100,
